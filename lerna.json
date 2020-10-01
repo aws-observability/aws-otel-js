@@ -1,0 +1,20 @@
+{
+  "lerna": "3.13.4",
+  "npmClient": "npm",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "0.10.2",
+  "changelog": {
+    "repo": " aws-observability/aws-opentelemetry-js ",
+    "labels": {
+      "breaking": ":boom: Breaking Change",
+      "enhancement": ":rocket: (Enhancement)",
+      "bug": ":bug: (Bug Fix)",
+      "core": ":wrench: Core",
+      "document": ":books: (Refine Doc)",
+      "feature-request": ":sparkles: (Feature)"
+    },
+    "cacheDir": ".changelog"
+  }
+}
