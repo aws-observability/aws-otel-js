@@ -13,7 +13,7 @@
     "compile": "lerna run compile",
     "test": "lerna run test",
     "test:browser": "lerna run test:browser",
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --hoist",
     "bump": "lerna publish",
     "codecov": "lerna run codecov",
     "codecov:browser": "lerna run codecov:browser",
