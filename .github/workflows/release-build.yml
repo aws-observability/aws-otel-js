@@ -20,7 +20,7 @@ jobs:
       - name: Bootstrap dependencies
         run: npm run bootstrap
       - name: Git commit version bump
-        run: git commit -am 'chore: Release {{ github.events.inputs.version }}'
+        run: git commit -am "chore:Release ${{ github.events.inputs.version }}"
       - name: Git push
         run: git push
       - name: Publish to npm
