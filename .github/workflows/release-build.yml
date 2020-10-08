@@ -1,0 +1,46 @@
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version to tag the release with, e.g., 1.2.0, 1.2.1-alpha.1'
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install Dependencies
+        run: npm install
+      - name: Bump the version in all package.json
+        run: npx lerna publish --skip-npm --no-git-tag-version --no-push ${{ github.event.inputs.version }} --yes
+      - name: Bootstrap dependencies
+        run: npm run bootstrap
+      - name: Add and Commit
+        uses: EndBug/add-and-commit@v5
+        with:
+          message: 'chore: %{{ github.events.inputs.version }}%'
+          tag: '${{ github.events.inputs.version }} --force'
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          tag_name: 'v${{ github.event.inputs.version }}'
+          release_name: 'Release v${{ github.event.inputs.version }}'
+          draft: false
+          prerelease: false
