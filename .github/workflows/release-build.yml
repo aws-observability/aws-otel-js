@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+          registry-url: 'https://registry.npmjs.org'
       - name: Install Dependencies
         run: npm install --ignore-scripts
       - name: Bump the version in all package.json
