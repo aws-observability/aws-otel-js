@@ -1,6 +1,6 @@
 {
   "name": "@aws-observability/id-generator-aws-xray",
-  "version": "0.10.1",
+  "version": "0.0.1",
   "description": "AWS X-Ray ID generator for OpenTelemetry",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
@@ -29,11 +29,11 @@
   "license": "ISC",
   "dependencies": {
     "@opentelemetry/core": "^0.10.2",
-    "assert": "^2.0.0",
     "@types/mocha": "7.0.2",
     "@types/node": "12.12.47",
     "@types/sinon": "9.0.4",
     "@types/webpack-env": "1.15.2",
+    "assert": "^2.0.0",
     "codecov": "3.7.1",
     "gts": "2.0.2",
     "istanbul-instrumenter-loader": "3.0.1",
