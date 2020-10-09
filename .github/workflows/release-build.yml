@@ -20,7 +20,10 @@ jobs:
       - name: Bootstrap dependencies
         run: npx lerna bootstrap --no-ci
       - name: Git commit version bump
-        run: git commit -am "chore:Release ${{ github.events.inputs.version }}"
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am 'chore:Release ${{ github.events.inputs.version }}'
       - name: Git push
         run: git push
       - name: Publish to npm
