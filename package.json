@@ -1,5 +1,5 @@
 {
-  "name": "aws-otel-js",
+  "name": "kelvin-aws-otel-js",
   "version": "0.10.2",
   "description": "Host AWS X-Ray vendor-specific components for OTel-JS-SDK auto-instrumentation.",
   "main": "build/src/index.js",
