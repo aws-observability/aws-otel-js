@@ -18,7 +18,7 @@ jobs:
       - name: Bump the version in all package.json
         run: npx lerna publish --skip-npm --no-git-tag-version --no-push ${{ github.event.inputs.version }} --yes
       - name: Bootstrap dependencies
-        run: npm run bootstrap
+        run: npx lerna bootstrap --no-ci
       - name: Git commit version bump
         run: git commit -am "chore:Release ${{ github.events.inputs.version }}"
       - name: Git push
