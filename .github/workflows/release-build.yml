@@ -25,7 +25,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -am 'chore:Release ${{ github.events.inputs.version }}'
+          git commit -am 'chore:Release ${{ github.event.inputs.version }}'
       - name: Git push
         run: git push
       - name: Publish to npm
