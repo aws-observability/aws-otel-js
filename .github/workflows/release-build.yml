@@ -29,13 +29,13 @@ jobs:
       - name: Git push
         run: git push
       - name: Publish to npm
-        run: npm publish
-        env:
+        run: |
           for dir in $(ls packages); do
             pushd packages/$dir
             npm publish
             popd
           done
+        env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create Release
         id: create_release
