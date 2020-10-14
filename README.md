@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project contains components of the OpenTelemetry JavaScript configured for use with AWS X-Ray. Please check out the upstream project to get a better understanding of the underlying features, APIs, and SDKs. This repository only contains a small portion of components which will allow OpenTelemetry to work with AWS X-Ray and the OpenTelemetry repository contains the rest.
+This project contains components of the [OpenTelemetry JavaScript](https://github.com/open-telemetry/opentelemetry-js) configured for use with AWS X-Ray. Please check out the upstream project to get a better understanding of the underlying features, APIs, and SDKs. This repository only contains a small portion of components which will allow OpenTelemetry to work with AWS X-Ray and the OpenTelemetry repository contains the rest.
 
 We provided an IdGenerator and Propagator which can be called in a custom configuration from the OpenTelemetry upstream API. The telemetry data can be exported in a variety of formats and can be configured via command lines or environment variables. The aim of this project is to able to gather telemetry data from a JavaScript application and export trace data to an AWS-XRay backend.
 
@@ -25,4 +25,3 @@ The [OpenTelemetry JavaScript SDK](https://github.com/open-telemetry/opentelemet
 ## License
 
 This project is licensed under the Apache-2.0 License.
-
