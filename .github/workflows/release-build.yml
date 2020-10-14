@@ -25,11 +25,16 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -am 'chore:Release ${{ github.events.inputs.version }}'
+          git commit -am 'chore:Release ${{ github.event.inputs.version }}'
       - name: Git push
         run: git push
       - name: Publish to npm
-        run: npm publish
+        run: |
+          for dir in $(ls packages); do
+            pushd packages/$dir
+            npm publish
+            popd
+          done
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Create Release
