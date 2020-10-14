@@ -12,7 +12,7 @@ Check out the getting started [docs](docs/getting-started.md).
 
 ## Supported Runtimes
 
-For the complete list of supported runtimes, please refer to the upstream documentation here (https://github.com/open-telemetry/opentelemetry-js/blob/master/README.md#supported-runtimes)
+For the complete list of supported runtimes, please refer to the upstream documentation [here](https://github.com/open-telemetry/opentelemetry-js/blob/master/README.md#supported-runtimes)
 
 ## How it works
 
