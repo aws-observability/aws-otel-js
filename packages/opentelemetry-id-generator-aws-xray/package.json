@@ -1,6 +1,6 @@
 {
-  "name": "@kelvin/id-generator-aws-xray",
-  "version": "0.0.3",
+  "name": "kelvin-id-generator-aws-xray",
+  "version": "0.0.1",
   "description": "AWS X-Ray ID generator for OpenTelemetry",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
