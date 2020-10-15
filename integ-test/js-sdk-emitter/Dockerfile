@@ -6,8 +6,6 @@ COPY . ./
 
 RUN ls
 
-EXPOSE 8080
-
 RUN cd integ-test/js-sdk-emitter
 
 RUN npm install
