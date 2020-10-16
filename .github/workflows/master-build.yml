@@ -41,10 +41,14 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-        - name: upload to ECR
-          run: |
-            docker build -t js-sdk-emitter-aws-otel -f integ-test/js-sdk-emitter/Dockerfile .
-            docker tag js-sdk-emitter-aws-otel ${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ needs.e2etest-preparation.outputs.version }}
-            docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ needs.e2etest-preparation.outputs.version }}
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+        - name: Build image and push to ECR
+          uses: docker/build-push-action@v2
+          with:
+            path: integ-test/js-sdk-emitter/Dockerfile
+            context: .
+            tags: js-sdk-emitter-aws-otel
+            push: ${{ steps.login-ecr.outputs.registry }}/$ECR_REPO:${{ needs.e2etest-preparation.outputs.version }}
             
-    
