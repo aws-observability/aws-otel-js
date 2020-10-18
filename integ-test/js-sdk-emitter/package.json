@@ -1,0 +1,36 @@
+{
+  "name": "test-app",
+  "version": "0.11.0",
+  "description": "test-application for javascript SDK",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "opentelemetry",
+    "http",
+    "tracing"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "@lerna/link": "^3.21.0",
+    "@opentelemetry/api": "^0.11.0",
+    "@opentelemetry/context-base": "^0.11.0",
+    "@opentelemetry/core": "^0.11.0",
+    "@opentelemetry/exporter-collector": "^0.11.0",
+    "@opentelemetry/node": "^0.11.0",
+    "@opentelemetry/plugin-http": "^0.11.0",
+    "@opentelemetry/propagator-jaeger": "^0.9.0",
+    "@opentelemetry/resource-detector-aws": "^0.10.3-alpha.28",
+    "@opentelemetry/resource-detector-gcp": "^0.10.3-alpha.28",
+    "@opentelemetry/resources": "^0.11.0",
+    "@opentelemetry/sdk-node": "^0.11.0",
+    "@opentelemetry/tracing": "^0.11.0",
+    "AWSXRayIdGenerator": "file:../../packages/opentelemetry-id-generator-aws-xray",
+    "AWSXRayPropagator": "file:../../packages/opentelemetry-propagator-aws-xray"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.0"
+  }
+}
+
