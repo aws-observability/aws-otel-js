@@ -4,16 +4,17 @@ const tracer = require('./tracer')('example-http-server');
 // eslint-disable-next-line import/order
 const http = require('http');
 
-/** Starts a HTTP server that receives requests on sample server port. */
-function startServer(port) {
+/** Starts a HTTP server that receives requests on sample server address. */
+function startServer(address) {
   // Creates a server
   const server = http.createServer(handleRequest);
   // Starts the server
-  server.listen(port, (err) => {
+  const endpoint = address.split(':');
+  server.listen(endpoint[0], endpoint[1], (err) => {
     if (err) {
       throw err;
     }
-    console.log(`Node HTTP listening on ${port}`);
+    console.log(`Node HTTP listening on ${address}`);
   });
 }
 
@@ -52,7 +53,6 @@ function handleRequest(request, response) {
     const traceIdJson = { "traceId" : xrayTraceId }
     return traceIdJson;
   }
-  
 }
 
 startServer(process.env.LISTEN_ADDRESS);
