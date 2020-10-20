@@ -6,8 +6,6 @@ COPY . ./
 
 RUN ls
 
-RUN cd integ-test/js-sdk-emitter
-
-RUN npm install
+RUN cd integ-test/js-sdk-emitter && npm install
 
 CMD ["node", "integ-test/js-sdk-emitter/server.js" ]
