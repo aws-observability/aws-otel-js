@@ -1,5 +1,5 @@
 {
-  "name": "kelvin-id-generator-aws-xray",
+  "name": "otel-aws-xray-id-generator",
   "version": "0.0.2",
   "description": "AWS X-Ray ID generator for OpenTelemetry",
   "main": "build/src/index.js",
