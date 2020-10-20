@@ -1,6 +1,6 @@
 {
   "name": "@aws/otel-aws-xray-propagator",
-  "version": "0.12.0",
+  "version": "0.11.0",
   "description": "OpenTelemetry AWS Xray propagator provides HTTP header propagation for systems that are using AWS Xray HTTP header format.",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
