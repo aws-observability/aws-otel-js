@@ -10,7 +10,7 @@ function startServer(address) {
   const server = http.createServer(handleRequest);
   // Starts the server
   const endpoint = address.split(':');
-  server.listen(endpoint[0], endpoint[1], (err) => {
+  server.listen(endpoint[1], endpoint[0], (err) => {
     if (err) {
       throw err;
     }
