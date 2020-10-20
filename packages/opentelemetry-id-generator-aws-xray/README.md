@@ -31,28 +31,28 @@ module.exports = ("service_name_here") => {
 
 For more details, see the Getting Started guide.
 
-#### Trace ID Details
+### Trace ID Details
 
 Example trace ID format: 58406520a006649127e371903a2de979
 
 A trace ID consists of two parts; the time stamp and the unique identifier.
 
-##### Time Stamp
+#### Time Stamp
 
 * the first 8 hexadecimal digits represent the time of the original request in Unix epoch time
 * for example, 10:00AM December 1st, 2016 PST in epoch time is 1480615200 seconds, or 58406520 in hexadecimal digits.
 
-##### Unique Identifier
+#### Unique Identifier
 
 * the last 24 hexadecimal digits is an unique identifier for the trace
 
-#### Useful links
+### Useful links
 
 * For more information on OpenTelemetry, visit: <https://opentelemetry.io/>
 * For more about OpenTelemetry JavaScript: <https://github.com/open-telemetry/opentelemetry-js>
 * For help or feedback on this project, join us on [gitter][gitter-url]
 
-#### License
+### License
 
 Apache 2.0 - See [LICENSE][license-url] for more information.
 
