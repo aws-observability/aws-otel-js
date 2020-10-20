@@ -8,7 +8,7 @@ The OpenTelemetry IdGenerator for AWS X-Ray generates trace IDs with its first f
 ### Installation
 
 `
-npm install --save @aws/otel-xray-id-generator
+npm install --save @aws/otel-aws-xray-id-generator
 `
 
 ### Usage

@@ -7,7 +7,7 @@ The OpenTelemetry Propagator for AWS X-Ray provides HTTP header propagation for 
 ### Installation
 
 `
-npm install --save @aws/otel-xray-propagator
+npm install --save @aws/otel-aws-xray-propagator
 `
 
 ### Usage
