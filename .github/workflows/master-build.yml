@@ -61,8 +61,6 @@ jobs:
           
   e2etest-ecs:
     strategy:
-      matrix:
-        type: [EC2, FARGATE]
     runs-on: ubuntu-latest
     needs: [build_docker]
     steps:
@@ -89,7 +87,7 @@ jobs:
 
       - name: Run testing suite
         run: |
-          cd terraform/ecs && terraform init && terraform apply -auto-approve -var="ecs_launch_type=${{ matrix.type }}" -var="aoc_image_repo=020628701572.dkr.ecr.us-west-2.amazonaws.com/aws/aws-otel-collector" -var="aoc_version=latest" -var="data_emitter_image=611364707713.dkr.ecr.us-west-2.amazonaws.com/amazon/aws-otel-js-sample-app:${{ github.sha }}"
+          cd terraform/ecs && terraform init && terraform apply -auto-approve -var-file=“../testing-suites/jssdk-ecs.tfvars” -var="aoc_image_repo=020628701572.dkr.ecr.us-west-2.amazonaws.com/aws/aws-otel-collector" -var="aoc_version=latest" -var="data_emitter_image=611364707713.dkr.ecr.us-west-2.amazonaws.com/amazon/aws-otel-js-sample-app:${{ github.sha }}"
 
       - name: Destroy resources
         if: ${{ always() }}
