@@ -33,7 +33,7 @@ module.exports = (serviceName) => {
   // add OTLP exporter
   const otlpExporter = new CollectorTraceExporter({
     serviceName: serviceName,
-    url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? OTEL_EXPORTER_OTLP_ENDPOINT : "localhost:55680"
+    url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : "localhost:55680"
   });
   tracerProvider.addSpanProcessor(new SimpleSpanProcessor(otlpExporter));
   tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
