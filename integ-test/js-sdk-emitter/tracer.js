@@ -2,7 +2,7 @@
 
 const { BasicTracerProvider, SimpleSpanProcessor, ConsoleSpanExporter } = require("@opentelemetry/tracing");
 const { NodeTracerProvider } = require('@opentelemetry/node');
-const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector');
+const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 
 const { AWSXRayPropagator } = require('AWSXRayPropagator');
 const { AwsXRayIdGenerator } = require('AWSXRayIdGenerator');
@@ -33,7 +33,7 @@ module.exports = (serviceName) => {
   // add OTLP exporter
   const otlpExporter = new CollectorTraceExporter({
     serviceName: serviceName,
-    protocolNode: 2,
+    url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? OTEL_EXPORTER_OTLP_ENDPOINT : "localhost:55680"
   });
   tracerProvider.addSpanProcessor(new SimpleSpanProcessor(otlpExporter));
   tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));

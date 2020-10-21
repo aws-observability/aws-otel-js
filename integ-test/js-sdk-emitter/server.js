@@ -1,6 +1,6 @@
 'use strict';
 
-const tracer = require('./tracer')('example-http-server');
+const tracer = require('./tracer')('example-server');
 // eslint-disable-next-line import/order
 const http = require('http');
 
