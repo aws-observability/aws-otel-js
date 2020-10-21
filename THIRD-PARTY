@@ -1,0 +1,269 @@
+# Dependency Licenses
+### To generate licenses use the following npm dependency:
+### npm install --save @wbmnky/license-report-generator
+### Run the package in each package.json file and compile into required THIRD-PARTY licensing txt
+-------------------
+
+### @opentelemetry/api
+  * **URL:** https://github.com/open-telemetry/opentelemetry-js#readme
+  * **Version:** 0.10.2
+  * **License:** Apache-2.0
+  * **Description:** Public API for OpenTelemetry
+
+### @opentelemetry/core
+  * **URL:** https://github.com/open-telemetry/opentelemetry-js#readme
+  * **Version:** 0.10.2
+  * **License:** Apache-2.0
+  * **Description:** OpenTelemetry Core provides default and no-op implementations of the OpenTelemetry types for trace and metrics
+
+### @types/mocha
+  * **URL:** https://github.com/DefinitelyTyped/DefinitelyTyped#readme
+  * **Version:** 7.0.2
+  * **License:** MIT
+  * **Description:** TypeScript definitions for mocha
+
+### @types/node
+  * **URL:** https://github.com/DefinitelyTyped/DefinitelyTyped#readme
+  * **Version:** 12.12.47
+  * **License:** MIT
+  * **Description:** TypeScript definitions for Node.js
+
+### @types/sinon
+  * **URL:** https://github.com/DefinitelyTyped/DefinitelyTyped#readme
+  * **Version:** 9.0.4
+  * **License:** MIT
+  * **Description:** TypeScript definitions for Sinon
+
+### @types/webpack-env
+  * **URL:** https://github.com/DefinitelyTyped/DefinitelyTyped#readme
+  * **Version:** 1.15.2
+  * **License:** MIT
+  * **Description:** TypeScript definitions for webpack (module API)
+
+### codecov
+  * **URL:** https://github.com/codecov/codecov-node
+  * **Version:** 3.7.1
+  * **License:** MIT
+  * **Description:** Uploading report to Codecov: https://codecov.io
+
+### gts
+  * **URL:** https://github.com/google/gts#readme
+  * **Version:** 2.0.2
+  * **License:** Apache-2.0
+  * **Description:** Google TypeScript Style
+
+### istanbul-instrumenter-loader
+  * **URL:** https://github.com/webpack-contrib/istanbul-instrumenter-loader
+  * **Version:** 3.0.1
+  * **License:** MIT
+  * **Description:** Istanbul instrumenter loader for webpack
+
+### karma
+  * **URL:** http://karma-runner.github.io/
+  * **Version:** 5.1.0
+  * **License:** MIT
+  * **Description:** Spectacular Test Runner for JavaScript.
+
+### karma-chrome-launcher
+  * **URL:** https://github.com/karma-runner/karma-chrome-launcher#readme
+  * **Version:** 3.1.0
+  * **License:** MIT
+  * **Description:** A Karma plugin. Launcher for Chrome and Chrome Canary.
+
+### karma-coverage-istanbul-reporter
+  * **URL:** https://github.com/mattlewis92/karma-coverage-istanbul-reporter#readme
+  * **Version:** 3.0.3
+  * **License:** MIT
+  * **Description:** A karma reporter that uses the latest istanbul 1.x APIs (with full sourcemap support) to report coverage.
+
+### karma-mocha
+  * **URL:** https://github.com/karma-runner/karma-mocha#readme
+  * **Version:** 2.0.1
+  * **License:** MIT
+  * **Description:** A Karma plugin. Adapter for Mocha testing framework.
+
+### karma-spec-reporter
+  * **URL:** https://github.com/mlex/karma-spec-reporter#readme
+  * **Version:** 0.0.32
+  * **License:** MIT
+  * **Description:** A Karma plugin. Report all spec-results to console (like mocha&#39;s spec reporter).
+
+### karma-webpack
+  * **URL:** https://github.com/webpack-contrib/karma-webpack
+  * **Version:** 4.0.2
+  * **License:** MIT
+  * **Description:** Use webpack with karma
+
+### mocha
+  * **URL:** https://mochajs.org/
+  * **Version:** 6.2.3
+  * **License:** MIT
+  * **Description:** simple, flexible, fun test framework
+
+### nyc
+  * **URL:** https://istanbul.js.org/
+  * **Version:** 15.1.0
+  * **License:** ISC
+  * **Description:** the Istanbul command line interface
+
+### rimraf
+  * **URL:** https://github.com/isaacs/rimraf#readme
+  * **Version:** 3.0.2
+  * **License:** ISC
+  * **Description:** A deep deletion module for node (like `rm -rf`)
+
+### sinon
+  * **URL:** https://sinonjs.org/
+  * **Version:** 9.0.2
+  * **License:** BSD-3-Clause
+  * **Description:** JavaScript test spies, stubs and mocks.
+
+### ts-loader
+  * **URL:** https://github.com/TypeStrong/ts-loader
+  * **Version:** 8.0.0
+  * **License:** MIT
+  * **Description:** TypeScript loader for webpack
+
+### ts-mocha
+  * **URL:** https://github.com/piotrwitek/ts-mocha#readme
+  * **Version:** 7.0.0
+  * **License:** MIT
+  * **Description:** Mocha thin wrapper that allows running TypeScript tests with TypeScript runtime (ts-node) to get rid of compilation complexity
+
+### ts-node
+  * **URL:** https://github.com/TypeStrong/ts-node
+  * **Version:** 8.10.2
+  * **License:** MIT
+  * **Description:** TypeScript execution environment and REPL for node.js, with source map support
+
+### tslint-consistent-codestyle
+  * **URL:** https://github.com/ajafff/tslint-consistent-codestyle#readme
+  * **Version:** 1.16.0
+  * **License:** MIT
+  * **Description:** Additional rules to enforce constistent code style with tslint
+
+### tslint-microsoft-contrib
+  * **URL:** https://github.com/Microsoft/tslint-microsoft-contrib#readme
+  * **Version:** 6.2.0
+  * **License:** MIT
+  * **Description:** TSLint Rules for Microsoft
+
+### typescript
+  * **URL:** https://www.typescriptlang.org/
+  * **Version:** 3.9.6
+  * **License:** Apache-2.0
+  * **Description:** TypeScript is a language for application scale JavaScript development
+
+### webpack
+  * **URL:** https://github.com/webpack/webpack
+  * **Version:** 4.43.0
+  * **License:** MIT
+  * **Description:** Packs CommonJs/AMD modules for the browser. Allows to split your codebase into multiple bundles, which can be loaded on demand. Support loaders to preprocess files, i.e. json, jsx, es7, css, less, ... and your custom stuff.
+
+### @commitlint/cli
+  * **URL:** https://github.com/conventional-changelog/commitlint#readme
+  * **Version:** 9.1.1
+  * **License:** MIT
+  * **Description:** Lint your commit messages
+
+### @commitlint/config-conventional
+  * **URL:** https://github.com/conventional-changelog/commitlint#readme
+  * **Version:** 9.1.1
+  * **License:** MIT
+  * **Description:** Shareable commitlint config enforcing conventional commits
+
+### @octetstream/promisify
+  * **URL:** https://github.com/octet-stream/promisify#readme
+  * **Version:** 2.0.2
+  * **License:** MIT
+  * **Description:** Tiny, dependency free promisify library.
+
+### @typescript-eslint/eslint-plugin
+  * **URL:** https://github.com/typescript-eslint/typescript-eslint#readme
+  * **Version:** 3.7.1
+  * **License:** MIT
+  * **Description:** TypeScript plugin for ESLint
+
+### @typescript-eslint/parser
+  * **URL:** https://github.com/typescript-eslint/typescript-eslint#readme
+  * **Version:** 3.7.1
+  * **License:** BSD-2-Clause
+  * **Description:** An ESLint custom parser which leverages TypeScript ESTree
+
+### beautify-benchmark
+  * **URL:** https://github.com/Fishrock123/beautify-benchmark
+  * **Version:** 0.2.4
+  * **License:** MIT
+  * **Description:** Beautify Benchmark.js&#39;s output into readable form.
+
+### benchmark
+  * **URL:** https://benchmarkjs.com/
+  * **Version:** 2.1.4
+  * **License:** MIT
+  * **Description:** A benchmarking library that supports high-resolution timers &amp; returns statistically significant results.
+
+### eslint
+  * **URL:** https://eslint.org
+  * **Version:** 7.5.0
+  * **License:** MIT
+  * **Description:** An AST-based pattern checker for JavaScript.
+
+### eslint-config-airbnb-base
+  * **URL:** https://github.com/airbnb/javascript
+  * **Version:** 14.2.0
+  * **License:** MIT
+  * **Description:** Airbnb&#39;s base JS ESLint config, following our styleguide
+
+### eslint-plugin-header
+  * **URL:** https://github.com/Stuk/eslint-plugin-header#readme
+  * **Version:** 3.0.0
+  * **License:** MIT
+  * **Description:** ESLint plugin to ensure that files begin with given comment
+
+### eslint-plugin-import
+  * **URL:** https://github.com/benmosher/eslint-plugin-import
+  * **Version:** 2.22.0
+  * **License:** MIT
+  * **Description:** Import with sanity.
+
+### gh-pages
+  * **URL:** https://github.com/tschaub/gh-pages
+  * **Version:** 3.1.0
+  * **License:** MIT
+  * **Description:** Publish to a gh-pages branch on GitHub (or any other branch on any other remote)
+
+### gts
+  * **URL:** https://github.com/google/gts#readme
+  * **Version:** 2.0.2
+  * **License:** Apache-2.0
+  * **Description:** Google TypeScript Style
+
+### husky
+  * **URL:** https://github.com/typicode/husky#readme
+  * **Version:** 4.2.5
+  * **License:** MIT
+  * **Description:** Prevents bad commit or push (git hooks, pre-commit/precommit, pre-push/prepush, post-merge/postmerge and all that stuff...)
+
+### lerna
+  * **URL:** https://github.com/lerna/lerna#readme
+  * **Version:** 3.22.1
+  * **License:** MIT
+  * **Description:** A tool for managing JavaScript projects with multiple packages.
+
+### lerna-changelog
+  * **URL:** https://github.com/lerna/lerna-changelog#readme
+  * **Version:** 1.0.1
+  * **License:** MIT
+  * **Description:** Generate a changelog for a lerna monorepo
+
+### markdownlint-cli
+  * **URL:** https://github.com/igorshubovych/markdownlint-cli#readme
+  * **Version:** 0.23.2
+  * **License:** MIT
+  * **Description:** MarkdownLint Command Line Interface
+
+### typescript
+  * **URL:** https://www.typescriptlang.org/
+  * **Version:** 3.9.7
+  * **License:** Apache-2.0
+  * **Description:** TypeScript is a language for application scale JavaScript development
