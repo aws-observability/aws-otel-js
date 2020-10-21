@@ -1,4 +1,7 @@
 # Dependency Licenses
+### To generate licenses use the following npm dependency:
+### npm install --save @wbmnky/license-report-generator
+### Run the package in each package.json file and compile into required THIRD-PARTY licensing txt
 -------------------
 
 ### @opentelemetry/api
