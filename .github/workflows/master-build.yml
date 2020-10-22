@@ -82,7 +82,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'aws-observability/aws-otel-collector-test-framework'
-          ref: 'terraform'
+          ref: ''
 
       - name: Run testing suite
         run: |
