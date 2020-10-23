@@ -25,7 +25,7 @@ module.exports = ("service_name_here") => {
   // ...}
 ```
 
-For more details, see the Getting Started guide.
+For more details, see the [Getting Started guide](https://aws-otel.github.io/docs/getting-started/javascript-sdk).
 
 ### Propagator Details
 
