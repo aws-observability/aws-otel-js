@@ -64,9 +64,6 @@ package-lock.json
 packages/**/yarn.lock
 packages/**/package-lock.json
 
-# docs files
-docs
-
 .nyc_output
 
 #lerna
