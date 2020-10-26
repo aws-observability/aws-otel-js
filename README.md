@@ -8,7 +8,7 @@ We provided an IdGenerator and Propagator which can be called in a custom config
 
 ## Getting Started
 
-Check out the getting started [docs](docs/getting-started.md).
+Check out the [getting started documentation](https://aws-otel.github.io/docs/getting-started/javascript-sdk).
 
 ## Supported Runtimes
 
