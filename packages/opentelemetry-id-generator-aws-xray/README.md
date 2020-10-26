@@ -17,19 +17,19 @@ In the [global tracer configuration file](https://github.com/open-telemetry/open
 
 ```js
 const { NodeTracerProvider } = require('@opentelemetry/node');
-const { AwsXRayIdGenerator } = require('@aws-observability/propagator-aws-xray');
+const { AWSXRayIdGenerator } = require('@aws/otel-aws-xray-id-generator');
 // ...
 
 module.exports = ("service_name_here") => {
    const tracerConfig = {
-    idGenerator: new AwsXRayIdGenerator(),
+    idGenerator: new AWSXRayIdGenerator(),
     resources: resources
   };
   const tracerProvider = new NodeTracerProvider(tracerConfig);
   // ...}
 ```
 
-For more details, see the Getting Started guide.
+For more details, see the [Getting Started guide](https://aws-otel.github.io/docs/getting-started/javascript-sdk).
 
 ### Trace ID Details
 

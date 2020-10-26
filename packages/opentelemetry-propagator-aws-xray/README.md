@@ -1,4 +1,4 @@
-# OpenTelemetry Propagator AWS Xray
+# OpenTelemetry Propagator AWS X-Ray
 [![Gitter chat][gitter-image]][gitter-url]
 [![Apache License][license-image]][license-image]
 
@@ -16,16 +16,16 @@ In the [global tracer configuration file](https://github.com/open-telemetry/open
 
 ```js
 const { propagation } = require("@opentelemetry/api");
-const { AwsXRayPropagator } = require('@aws-observability/propagator-aws-xray');
+const { AWSXRayPropagator } = require('@aws/otel-aws-xray-propagator');
 // ...
 
 module.exports = ("service_name_here") => {
   // set global propagator
-  propagation.setGlobalPropagator(new AwsXRayPropagator());
+  propagation.setGlobalPropagator(new AWSXRayPropagator());
   // ...}
 ```
 
-For more details, see the Getting Started guide.
+For more details, see the [Getting Started guide](https://aws-otel.github.io/docs/getting-started/javascript-sdk).
 
 ### Propagator Details
 
