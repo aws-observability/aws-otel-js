@@ -20,6 +20,12 @@ const SPAN_ID_BYTES = 8;
 const TRACE_ID_BYTES = 16;
 const TIME_BYTES = 4;
 
+let randomFillSync: (b: Buffer) => Buffer | undefined;
+try {
+  randomFillSync = require('crypto').randomFillSync;
+} catch (err) {}
+
+
 /** IdGenerator that generates trace IDs conforming to AWS X-Ray format.
  * https://docs.aws.amazon.com/xray/latest/devguide/xray-api-sendingdata.html#xray-api-traceids
  */
@@ -41,10 +47,14 @@ export class AwsXRayIdGenerator implements IdGenerator {
 const SHARED_BUFFER = Buffer.allocUnsafe(TRACE_ID_BYTES);
 function getIdGenerator(timeUsage: boolean, bytes: number): () => string {
   return function generateId() {
-    for (let i = 0; i < bytes / 4; i++) {
-      // unsigned right shift drops decimal part of the number
-      // it is required because if a number between 2**32 and 2**32 - 1 is generated, an out of range error is thrown by writeUInt32BE
-      SHARED_BUFFER.writeUInt32BE((Math.random() * 2 ** 32) >>> 0, i * 4);
+    if (randomFillSync !== undefined) {
+      randomFillSync(SHARED_BUFFER);
+    } else {
+      for (let i = 0; i < bytes / 4; i++) {
+        // unsigned right shift drops decimal part of the number
+        // it is required because if a number between 2**32 and 2**32 - 1 is generated, an out of range error is thrown by writeUInt32BE
+        SHARED_BUFFER.writeUInt32BE((Math.random() * 2 ** 32) >>> 0, i * 4);
+      }
     }
 
     // If buffer is all 0, set the last byte to 1 to guarantee a valid w3c id is generated
