@@ -17,8 +17,8 @@ const meter = new MeterProvider({
 }).getMeter('aws-otel-js');
 
 /** Counter Metrics */
-const playloadMetric = meter.createCounter('playload', {
-  description: 'Metric for counting request playload size',
+const payloadMetric = meter.createCounter('payload', {
+  description: 'Metric for counting request payload size',
 });
 
 /** Up and Down Counter Metrics */
@@ -36,7 +36,7 @@ const labels = { pid: process.pid, env: 'beta' };
 
 /** Send the defined metrics every seconds */
 setInterval(() => {
-  playloadMetric.bind(labels).add(1);
+  payloadMetric.bind(labels).add(1);
   activeReqMetric.bind(labels).add(Math.random() > 0.5 ? 1 : -1);
   requestLatency.bind(labels).record(Math.random() * 1000)
 }, 1000);
