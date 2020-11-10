@@ -8,6 +8,7 @@ const { MeterProvider } = require('@opentelemetry/metrics');
 const metricExporter = new CollectorMetricExporter({
   serviceName: 'aws-otel-js-sample',
   logger: new ConsoleLogger(LogLevel.DEBUG),
+  url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : "localhost:55680"
 });
 
 /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */
