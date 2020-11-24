@@ -1,7 +1,7 @@
-# triggers the workflow on pull request only for the master branch
+# triggers the workflow on pull request only for the main branch
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
