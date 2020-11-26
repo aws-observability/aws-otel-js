@@ -15,7 +15,7 @@
  */
 
 'use strict';
-const tracer = require('./tracer')('');
+const tracer = require('./tracer')('example-server');
 // eslint-disable-next-line import/order
 const http = require('http');
 const https = require('https');
@@ -39,15 +39,21 @@ function startServer(address) {
 }
 
 /** A function which handles requests and send response. */
+<<<<<<< HEAD
 function handleRequest(req, res) {  
   const url = req.url;
   const requestStartTime = new Date().getMilliseconds();
   // start recording a time for request
+=======
+function handleRequest(req, res) {
+  const url = req.url;
+>>>>>>> eeb24ea... feat: add metrics path
   try { 
     if (url === '/') {
       res.end('healthcheck');
     }
     if (url === '/aws-sdk-call') {
+<<<<<<< HEAD
       const s3 = new AWS.S3();
       s3.listBuckets(() => {});
       const traceID = returnTraceIdJson();
@@ -68,16 +74,37 @@ function handleRequest(req, res) {
 }
 
 //returns a traceId in X-Ray JSON format
+=======
+      const body = [];
+      req.on('error', (err) => console.log(err));
+      req.on('data', (chunk) => body.push(chunk));
+      const traceID = returnTraceIdJson()
+      req.on('end', () => {
+        res.end(traceID);
+      }, 2000);
+    }
+    if (url === '/outgoing-http-call') {
+      require('./metrics');
+    }
+  } catch (err) {
+  console.error(err)
+  }
+}
+
+>>>>>>> eeb24ea... feat: add metrics path
 function returnTraceIdJson() {
   const traceId = tracer.getCurrentSpan().context().traceId;
   const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
   const traceIdJson = JSON.stringify({ "traceId" : xrayTraceId });
   return traceIdJson;
+<<<<<<< HEAD
 }
 
 //returns random payload size
 function mimicPayLoadSize() {
   return Math.random() * 1000;
+=======
+>>>>>>> eeb24ea... feat: add metrics path
 }
 
 startServer("localhost:8080");
