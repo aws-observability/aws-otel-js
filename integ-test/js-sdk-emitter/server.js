@@ -87,7 +87,7 @@ function handleRequest(req, res) {
       require('./metrics');
     }
   } catch (err) {
-  console.error(err)
+      console.error(err)
   }
 }
 
