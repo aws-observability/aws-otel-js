@@ -15,7 +15,6 @@
  */
 
 'use strict';
-
 const tracer = require('./tracer')('example-server');
 // eslint-disable-next-line import/order
 const http = require('http');
@@ -35,40 +34,34 @@ function startServer(address) {
 }
 
 /** A function which handles requests and send response. */
-function handleRequest(request, response) {
-  const currentSpan = tracer.getCurrentSpan();
-  // display traceid in the terminal
-  console.log(`traceid: ${currentSpan.context().traceId}`);
-  const span = tracer.startSpan('handleRequest', {
-    parent: currentSpan,
-    kind: 1, // server
-    attributes: { key: 'value' },
-  });
-  // Annotate our span to capture metadata about the operation
-  span.addEvent('invoking handleRequest');
-  try {
-    const body = [];
-    request.on('error', (err) => console.log(err));
-    request.on('data', (chunk) => body.push(chunk));
-    // const traceIdJson = returnTraceIdJson(span);
-    request.on('end', () => {
-      // deliberately sleeping to mock some action.
-      setTimeout(() => {
-        span.end();
-        response.end(JSON.stringify(returnTraceIdJson(span)));
+function handleRequest(req, res) {
+  const url = req.url;
+  try { 
+    if (url === '/') {
+      res.end('healthcheck');
+    }
+    if (url === '/aws-sdk-call') {
+      const body = [];
+      req.on('error', (err) => console.log(err));
+      req.on('data', (chunk) => body.push(chunk));
+      const traceID = returnTraceIdJson()
+      req.on('end', () => {
+        res.end(traceID);
       }, 2000);
-    });
+    }
+    if (url === '/outgoing-http-call') {
+      require('./metrics');
+    }
   } catch (err) {
-    console.error(err);
-    span.end();
+  console.error(err)
   }
+}
 
-  function returnTraceIdJson(span) {
-    const traceId = span.context().traceId.toString();
-    const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
-    const traceIdJson = { "traceId" : xrayTraceId }
-    return traceIdJson;
-  }
+function returnTraceIdJson() {
+  const traceId = tracer.getCurrentSpan().context().traceId;
+  const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
+  const traceIdJson = JSON.stringify({ "traceId" : xrayTraceId });
+  return traceIdJson;
 }
 
 startServer(process.env.LISTEN_ADDRESS);
