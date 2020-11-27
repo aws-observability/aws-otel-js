@@ -16,20 +16,20 @@
 
 import {
   Context,
-  HttpTextPropagator,
+  TextMapPropagator,
   SpanContext,
   TraceFlags,
   SetterFunction,
   GetterFunction,
-  INVALID_TRACE_ID,
-  INVALID_SPAN_ID,
-} from '@opentelemetry/api';
-import {
+  isSpanContextValid,
+  isValidSpanId,
+  isValidTraceId,
+  INVALID_TRACEID,
+  INVALID_SPANID,
   getParentSpanContext,
   setExtractedSpanContext,
   INVALID_SPAN_CONTEXT,
-  isValid,
-} from '@opentelemetry/core';
+} from '@opentelemetry/api';
 
 export const AWSXRAY_TRACE_ID_HEADER = 'X-Amzn-Trace-Id';
 
@@ -51,8 +51,6 @@ const SAMPLED_FLAG_LENGTH = 1;
 const IS_SAMPLED = '1';
 const NOT_SAMPLED = '0';
 
-const VALID_TRACEID_REGEX = /^([0-9a-f]{32})$/i;
-const VALID_SPANID_REGEX = /^[0-9a-f]{16}$/i;
 /**
  * Implementation of the AWS X-Ray Trace Header propagation protocol. See <a href=
  * https://https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html#xray-concepts-tracingheader>AWS
@@ -61,10 +59,10 @@ const VALID_SPANID_REGEX = /^[0-9a-f]{16}$/i;
  * An example AWS Xray Tracing Header is shown below:
  * X-Amzn-Trace-Id: Root=1-5759e988-bd862e3fe1be46a994272793;Parent=53995c3f42cd8ad8;Sampled=1
  */
-export class AWSXRayPropagator implements HttpTextPropagator {
+export class AWSXRayPropagator implements TextMapPropagator {
   inject(context: Context, carrier: unknown, setter: SetterFunction) {
     const spanContext = getParentSpanContext(context);
-    if (!spanContext || !isValid(spanContext)) return;
+    if (!spanContext || !isSpanContextValid(spanContext)) return;
 
     const otTraceId = spanContext.traceId;
 
@@ -96,7 +94,7 @@ export class AWSXRayPropagator implements HttpTextPropagator {
 
   extract(context: Context, carrier: unknown, getter: GetterFunction): Context {
     const spanContext = this.getSpanContextFromHeader(carrier, getter);
-    if (!isValid(spanContext)) return context;
+    if (!isSpanContextValid(spanContext)) return context;
 
     return setExtractedSpanContext(context, spanContext);
   }
@@ -114,8 +112,8 @@ export class AWSXRayPropagator implements HttpTextPropagator {
 
     let pos = 0;
     let trimmedPart: string;
-    let parsedTraceId = INVALID_TRACE_ID;
-    let parsedSpanId = INVALID_SPAN_ID;
+    let parsedTraceId = INVALID_TRACEID;
+    let parsedSpanId = INVALID_SPANID;
     let parsedTraceFlags = null;
     while (pos < traceHeader.length) {
       const delimiterIndex = traceHeader.indexOf(TRACE_HEADER_DELIMITER, pos);
@@ -150,7 +148,7 @@ export class AWSXRayPropagator implements HttpTextPropagator {
       traceFlags: parsedTraceFlags,
       isRemote: true,
     };
-    if (!isValid(resultSpanContext)) {
+    if (!isSpanContextValid(resultSpanContext)) {
       return INVALID_SPAN_CONTEXT;
     }
     return resultSpanContext;
@@ -159,12 +157,12 @@ export class AWSXRayPropagator implements HttpTextPropagator {
   private _parseTraceId(xrayTraceId: string): string {
     // Check length of trace id
     if (xrayTraceId.length !== TRACE_ID_LENGTH) {
-      return INVALID_TRACE_ID;
+      return INVALID_TRACEID;
     }
 
     // Check version trace id version
     if (!xrayTraceId.startsWith(TRACE_ID_VERSION)) {
-      return INVALID_TRACE_ID;
+      return INVALID_TRACEID;
     }
 
     // Check delimiters
@@ -172,7 +170,7 @@ export class AWSXRayPropagator implements HttpTextPropagator {
       xrayTraceId.charAt(TRACE_ID_DELIMITER_INDEX_1) !== TRACE_ID_DELIMITER ||
       xrayTraceId.charAt(TRACE_ID_DELIMITER_INDEX_2) !== TRACE_ID_DELIMITER
     ) {
-      return INVALID_TRACE_ID;
+      return INVALID_TRACEID;
     }
 
     const epochPart = xrayTraceId.substring(
@@ -186,17 +184,15 @@ export class AWSXRayPropagator implements HttpTextPropagator {
     const resTraceId = epochPart + uniquePart;
 
     // Check the content of trace id
-    if (!VALID_TRACEID_REGEX.test(resTraceId)) {
-      return INVALID_TRACE_ID;
+    if (!isValidTraceId(resTraceId)) {
+      return INVALID_TRACEID;
     }
 
     return resTraceId;
   }
 
   private _parseSpanId(xrayParentId: string): string {
-    return VALID_SPANID_REGEX.test(xrayParentId)
-      ? xrayParentId
-      : INVALID_SPAN_ID;
+    return isValidSpanId(xrayParentId) ? xrayParentId : INVALID_SPANID;
   }
 
   private _parseTraceFlag(xraySampledFlag: string): TraceFlags | null {
