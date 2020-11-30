@@ -25,7 +25,7 @@ const { AwsXRayIdGenerator } = require('AWSXRayIdGenerator');
 
 const { context, propagation, trace } = require("@opentelemetry/api");
 const { awsEc2Detector } = require('@opentelemetry/resource-detector-aws');
-const { detectResources } = require('@opentelemetry/resources/build/src/platform/node/detect-resources');
+const { detectResources } = require('@opentelemetry/resources');
 
 module.exports = (serviceName) => {
   // set global propagator
