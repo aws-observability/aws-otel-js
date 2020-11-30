@@ -63,6 +63,6 @@
     "webpack": "4.43.0"
   },
   "dependencies": {
-    "@opentelemetry/core": "^0.10.2"
+    "@opentelemetry/core": "^0.12.0"
   }
 }
