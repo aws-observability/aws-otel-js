@@ -18,11 +18,16 @@
 const tracer = require('./tracer')('example-server');
 // eslint-disable-next-line import/order
 const http = require('http');
+<<<<<<< HEAD
 const https = require('https');
 const fs = require('fs');
 // const requests = require('requests');
 const AWS = require('aws-sdk');
 const meter = require('./metric-emitter');
+=======
+const request = require('request');
+const AWS = require('aws-sdk');
+>>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
 
 /** Starts a HTTP server that receives requests on sample server address. */
 function startServer(address) {
@@ -40,12 +45,16 @@ function startServer(address) {
 
 /** A function which handles requests and send response. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 function handleRequest(req, res) {  
   const url = req.url;
   const requestStartTime = new Date().getMilliseconds();
   // start recording a time for request
 =======
 function handleRequest(req, res) {
+=======
+function handleRequest(req, res) {  
+>>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
   const url = req.url;
 >>>>>>> eeb24ea... feat: add metrics path
   try { 
@@ -53,6 +62,7 @@ function handleRequest(req, res) {
       res.end('healthcheck');
     }
     if (url === '/aws-sdk-call') {
+<<<<<<< HEAD
 <<<<<<< HEAD
       const s3 = new AWS.S3();
       s3.listBuckets(() => {});
@@ -82,9 +92,23 @@ function handleRequest(req, res) {
       req.on('end', () => {
         res.end(traceID);
       }, 2000);
+=======
+      const s3 = new AWS.S3();
+      s3.listBuckets((err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      const traceID = returnTraceIdJson();
+      res.end(traceID);
+>>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
     }
+
     if (url === '/outgoing-http-call') {
-      require('./metrics');
+      // require('./metrics');
+      http.get('http://aws.amazon.com');
+      const traceID = returnTraceIdJson();
+      res.end(traceID);
     }
   } catch (err) {
       console.error(err)
@@ -107,4 +131,8 @@ function mimicPayLoadSize() {
 >>>>>>> eeb24ea... feat: add metrics path
 }
 
+<<<<<<< HEAD
 startServer("localhost:8080");
+=======
+startServer("localhost:8080");
+>>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
