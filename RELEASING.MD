@@ -22,7 +22,7 @@ In addition, you can refer to
 [CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/main/docs/releases/CHANGELOG.md)
 for a list of major changes since last release.
 
-## Update release versions in documentations and CHANGELOG files
+## Update release versions in CHANGELOG files
 
 After releasing is done, you need to update
 [CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/main/docs/releases/CHANGELOG.md).
