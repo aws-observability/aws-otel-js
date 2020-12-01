@@ -19,14 +19,14 @@ You can use the Github [compare tool](https://github.com/aws-observability/aws-o
 to view a summary of all commits since last release as a reference.
 
 In addition, you can refer to
-[CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/main/docs/releases/v0.12.0.md)
+[CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/main/docs/releases/CHANGELOG.md)
 for a list of major changes since last release.
 
 ## Update release versions in documentations and CHANGELOG files
 
 After releasing is done, you need to update
-[CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/release-notes/docs/releases/v0.12.0.md).
+[CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/main/docs/releases/CHANGELOG.md).
 
 Create a PR to mark the new release in
-[CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/release-notes/docs/releases/v0.12.0.md)
+[CHANGELOG.md](https://github.com/aws-observability/aws-otel-js/blob/main/docs/releases/CHANGELOG.md)
 on main branch.
