@@ -15,7 +15,7 @@ Once the GitHub workflow completes, go to Github [release
 page](https://github.com/aws-observability/aws-otel-js/releases), press
 `Draft a new release` to write release notes about the new release. If there is already a draft release notes, just point it at the created tag.
 
-You can use the Github [compare tool](https://github.com/open-telemetry/opentelemetry-java/compare/)
+You can use the Github [compare tool](https://github.com/aws-observability/aws-otel-js/compare)
 to view a summary of all commits since last release as a reference.
 
 In addition, you can refer to
