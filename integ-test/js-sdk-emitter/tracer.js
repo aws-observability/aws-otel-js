@@ -16,14 +16,14 @@
 
 'use strict'
 
-const { BasicTracerProvider, SimpleSpanProcessor, ConsoleSpanExporter } = require("@opentelemetry/tracing");
+const { SimpleSpanProcessor, ConsoleSpanExporter } = require("@opentelemetry/tracing");
 const { NodeTracerProvider } = require('@opentelemetry/node');
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 
 const { AWSXRayPropagator } = require('AWSXRayPropagator');
 const { AwsXRayIdGenerator } = require('AWSXRayIdGenerator');
 
-const { context, propagation, trace } = require("@opentelemetry/api");
+const { propagation, trace } = require("@opentelemetry/api");
 const { awsEc2Detector } = require('@opentelemetry/resource-detector-aws');
 const { detectResources } = require('@opentelemetry/resources');
 
@@ -42,7 +42,14 @@ module.exports = (serviceName) => {
   // create a provider for activating and tracking with AWS IdGenerator
   const tracerConfig = {
     idGenerator: new AwsXRayIdGenerator(),
-    resources: resources
+    resources: resources,
+    plugins: {
+      "aws-sdk": {
+        enabled: true,
+        // You may use a package name or absolute path to the file.
+        path: "opentelemetry-plugin-aws-sdk",
+      },
+    },
   };
   const tracerProvider = new NodeTracerProvider(tracerConfig);
 

@@ -18,6 +18,8 @@
 const tracer = require('./tracer')('example-server');
 // eslint-disable-next-line import/order
 const http = require('http');
+const request = require('request');
+const AWS = require('aws-sdk');
 
 /** Starts a HTTP server that receives requests on sample server address. */
 function startServer(address) {
@@ -34,23 +36,28 @@ function startServer(address) {
 }
 
 /** A function which handles requests and send response. */
-function handleRequest(req, res) {
+function handleRequest(req, res) {  
   const url = req.url;
   try { 
     if (url === '/') {
       res.end('healthcheck');
     }
     if (url === '/aws-sdk-call') {
-      const body = [];
-      req.on('error', (err) => console.log(err));
-      req.on('data', (chunk) => body.push(chunk));
-      const traceID = returnTraceIdJson()
-      req.on('end', () => {
-        res.end(traceID);
-      }, 2000);
+      const s3 = new AWS.S3();
+      s3.listBuckets((err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      const traceID = returnTraceIdJson();
+      res.end(traceID);
     }
+
     if (url === '/outgoing-http-call') {
-      require('./metrics');
+      // require('./metrics');
+      http.get('http://aws.amazon.com');
+      const traceID = returnTraceIdJson();
+      res.end(traceID);
     }
   } catch (err) {
       console.error(err)
@@ -64,4 +71,4 @@ function returnTraceIdJson() {
   return traceIdJson;
 }
 
-startServer(process.env.LISTEN_ADDRESS);
+startServer("localhost:8080");

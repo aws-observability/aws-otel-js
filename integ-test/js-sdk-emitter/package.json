@@ -1,7 +1,10 @@
 {
   "name": "test-app",
   "version": "0.12.0",
+<<<<<<< HEAD
   "private": true,
+=======
+>>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
   "description": "test-application for javascript SDK",
   "main": "index.js",
   "scripts": {
@@ -19,6 +22,7 @@
   "dependencies": {
     "@lerna/link": "^3.21.0",
     "@opentelemetry/api": "^0.12.0",
+<<<<<<< HEAD
     "@opentelemetry/core": "^0.12.0",
     "@opentelemetry/plugin-grpc": "^0.12.0",
     "@opentelemetry/exporter-collector-grpc": "^0.12.0",
@@ -26,9 +30,26 @@
     "@opentelemetry/plugin-http": "^0.12.0",
     "@opentelemetry/resource-detector-aws": "^0.12.0",
     "@opentelemetry/resources": "^0.12.0",
+=======
+    "@opentelemetry/context-base": "^0.12.0",
+    "@opentelemetry/core": "^0.12.0",
+    "@opentelemetry/exporter-collector-grpc": "^0.12.0",
+    "@opentelemetry/node": "^0.12.0",
+    "@opentelemetry/plugin-grpc": "^0.12.0",
+    "@opentelemetry/plugin-http": "^0.12.0",
+    "@opentelemetry/propagator-jaeger": "^0.9.0",
+    "@opentelemetry/resource-detector-aws": "^0.10.3-alpha.28",
+    "@opentelemetry/resource-detector-gcp": "^0.10.3-alpha.28",
+    "@opentelemetry/resources": "^0.12.0",
+    "@opentelemetry/sdk-node": "^0.12.0",
+>>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
     "@opentelemetry/tracing": "^0.12.0",
     "AWSXRayIdGenerator": "file:../../packages/opentelemetry-id-generator-aws-xray",
-    "AWSXRayPropagator": "file:../../packages/opentelemetry-propagator-aws-xray"
+    "AWSXRayPropagator": "file:../../packages/opentelemetry-propagator-aws-xray",
+    "aws-sdk": "^2.799.0",
+    "express": "^4.17.1",
+    "https": "^1.0.0",
+    "opentelemetry-plugin-aws-sdk": "0.0.13"
   },
   "devDependencies": {
     "cross-env": "^6.0.0"
