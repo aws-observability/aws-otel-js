@@ -1,4 +1,4 @@
-# Releasing OpenTelemetry Packages
+# Releasing AWS OpenTelemetry JavaScript Packages
 
 ## Starting the Release
 
