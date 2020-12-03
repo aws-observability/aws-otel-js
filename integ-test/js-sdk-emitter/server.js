@@ -15,9 +15,10 @@
  */
 
 'use strict';
-const tracer = require('./tracer')('example-server');
+const tracer = require('./tracer')('');
 // eslint-disable-next-line import/order
 const http = require('http');
+<<<<<<< HEAD
 <<<<<<< HEAD
 const https = require('https');
 const fs = require('fs');
@@ -25,6 +26,10 @@ const fs = require('fs');
 const AWS = require('aws-sdk');
 const meter = require('./metric-emitter');
 =======
+=======
+const https = require('https');
+const fs = require('fs');
+>>>>>>> 6bc54af... chore: update endpoints of integration apps and include aws js sdk tracing
 const request = require('request');
 const AWS = require('aws-sdk');
 >>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
@@ -94,19 +99,19 @@ function handleRequest(req, res) {
       }, 2000);
 =======
       const s3 = new AWS.S3();
-      s3.listBuckets((err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      s3.listBuckets(() => {});
       const traceID = returnTraceIdJson();
       res.end(traceID);
 >>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
     }
 
     if (url === '/outgoing-http-call') {
+      // const options = {
+      //   key: fs.readFileSync('./server-key.pem'),
+      //   cert: fs.readFileSync('./server-cert.pem'),
+      // };
       // require('./metrics');
-      http.get('http://aws.amazon.com');
+      request.get('https://aws.amazon.com');
       const traceID = returnTraceIdJson();
       res.end(traceID);
     }
