@@ -20,8 +20,9 @@ const tracer = require('./tracer')('');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-const request = require('request');
+// const requests = require('requests');
 const AWS = require('aws-sdk');
+const meter = require('./metric-emitter');
 
 /** Starts a HTTP server that receives requests on sample server address. */
 function startServer(address) {
@@ -40,6 +41,8 @@ function startServer(address) {
 /** A function which handles requests and send response. */
 function handleRequest(req, res) {  
   const url = req.url;
+  const requestStartTime = new Date().getMilliseconds();
+  // start recording a time for request
   try { 
     if (url === '/') {
       res.end('healthcheck');
@@ -50,27 +53,31 @@ function handleRequest(req, res) {
       const traceID = returnTraceIdJson();
       res.end(traceID);
     }
-
+    
     if (url === '/outgoing-http-call') {
-      // const options = {
-      //   key: fs.readFileSync('./server-key.pem'),
-      //   cert: fs.readFileSync('./server-cert.pem'),
-      // };
-      // require('./metrics');
-      request.get('https://aws.amazon.com');
+      https.get('https://aws.amazon.com');
       const traceID = returnTraceIdJson();
       res.end(traceID);
+
+      meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
+      meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
     }
   } catch (err) {
       console.error(err)
   }
 }
 
+//returns a traceId in X-Ray JSON format
 function returnTraceIdJson() {
   const traceId = tracer.getCurrentSpan().context().traceId;
   const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
   const traceIdJson = JSON.stringify({ "traceId" : xrayTraceId });
   return traceIdJson;
+}
+
+//returns random payload size
+function mimicPayLoadSize() {
+  return Math.random() * 1000;
 }
 
 startServer("localhost:8080");

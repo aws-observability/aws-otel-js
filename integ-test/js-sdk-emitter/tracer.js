@@ -44,6 +44,12 @@ module.exports = (serviceName) => {
     idGenerator: new AwsXRayIdGenerator(),
     resources: resources,
     plugins: {
+      https: {
+        enabled: true,
+        // You may use a package name or absolute path to the file.
+        path: '@opentelemetry/plugin-https',
+        // https plugin options
+      },
       "aws-sdk": {
         enabled: true,
         // You may use a package name or absolute path to the file.

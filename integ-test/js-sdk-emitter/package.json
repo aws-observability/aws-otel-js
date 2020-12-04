@@ -39,6 +39,7 @@
     "@opentelemetry/core": "^0.12.0",
     "@opentelemetry/exporter-collector-grpc": "file:opentelemetry-js/packages/opentelemetry-exporter-collector-grpc",
     "@opentelemetry/exporter-collector-proto": "file:opentelemetry-js/packages/opentelemetry-exporter-collector-proto",
+    "@opentelemetry/exporter-collector": "^0.12.0",
     "@opentelemetry/node": "^0.12.0",
     "@opentelemetry/plugin-grpc": "^0.12.0",
     "@opentelemetry/plugin-https": "^0.12.0",
