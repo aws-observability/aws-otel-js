@@ -23,6 +23,7 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 // const requests = require('requests');
+<<<<<<< HEAD
 const AWS = require('aws-sdk');
 const meter = require('./metric-emitter');
 =======
@@ -33,6 +34,10 @@ const fs = require('fs');
 const request = require('request');
 const AWS = require('aws-sdk');
 >>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
+=======
+const AWS = require('aws-sdk');
+const meter = require('./metric-emitter');
+>>>>>>> 40dac27... feat: add metrics exporter on endpoint
 
 /** Starts a HTTP server that receives requests on sample server address. */
 function startServer(address) {
@@ -55,6 +60,7 @@ function handleRequest(req, res) {
   const url = req.url;
   const requestStartTime = new Date().getMilliseconds();
   // start recording a time for request
+<<<<<<< HEAD
 =======
 function handleRequest(req, res) {
 =======
@@ -62,6 +68,8 @@ function handleRequest(req, res) {
 >>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
   const url = req.url;
 >>>>>>> eeb24ea... feat: add metrics path
+=======
+>>>>>>> 40dac27... feat: add metrics exporter on endpoint
   try { 
     if (url === '/') {
       res.end('healthcheck');
@@ -104,23 +112,25 @@ function handleRequest(req, res) {
       res.end(traceID);
 >>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
     }
-
+    
     if (url === '/outgoing-http-call') {
-      // const options = {
-      //   key: fs.readFileSync('./server-key.pem'),
-      //   cert: fs.readFileSync('./server-cert.pem'),
-      // };
-      // require('./metrics');
-      request.get('https://aws.amazon.com');
+      https.get('https://aws.amazon.com');
       const traceID = returnTraceIdJson();
       res.end(traceID);
+
+      meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
+      meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
     }
   } catch (err) {
       console.error(err)
   }
 }
 
+<<<<<<< HEAD
 >>>>>>> eeb24ea... feat: add metrics path
+=======
+//returns a traceId in X-Ray JSON format
+>>>>>>> 40dac27... feat: add metrics exporter on endpoint
 function returnTraceIdJson() {
   const traceId = tracer.getCurrentSpan().context().traceId;
   const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
@@ -137,7 +147,16 @@ function mimicPayLoadSize() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 startServer("localhost:8080");
 =======
 startServer("localhost:8080");
 >>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
+=======
+//returns random payload size
+function mimicPayLoadSize() {
+  return Math.random() * 1000;
+}
+
+startServer("localhost:8080");
+>>>>>>> 40dac27... feat: add metrics exporter on endpoint
