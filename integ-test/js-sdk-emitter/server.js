@@ -38,22 +38,22 @@ function startServer(address) {
 }
 
 /** A function which handles requests and send response. */
-function handleRequest(req, res) {  
+function handleRequest(req, res) {
   const url = req.url;
   const requestStartTime = new Date().getMilliseconds();
   // start recording a time for request
-  try { 
+  try {
     if (url === '/') {
       res.end('healthcheck');
     }
 
     if (url === '/aws-sdk-call') {
       const s3 = new AWS.S3();
-      s3.listBuckets(() => {});
+      s3.listBuckets(() => { });
       const traceID = returnTraceIdJson();
       res.end(traceID);
     }
-    
+
     if (url === '/outgoing-http-call') {
       request('https://aws.amazon.com');
       const traceID = returnTraceIdJson();
@@ -62,7 +62,7 @@ function handleRequest(req, res) {
       meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
     }
   } catch (err) {
-      console.error(err);
+    console.error(err);
   }
 }
 
@@ -70,7 +70,7 @@ function handleRequest(req, res) {
 function returnTraceIdJson() {
   const traceId = tracer.getCurrentSpan().context().traceId;
   const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
-  const traceIdJson = JSON.stringify({ "traceId" : xrayTraceId });
+  const traceIdJson = JSON.stringify({ "traceId": xrayTraceId });
   return traceIdJson;
 }
 
