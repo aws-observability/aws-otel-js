@@ -32,7 +32,6 @@ module.exports = (serviceName) => {
   // create a provider for activating and tracking with AWS IdGenerator
   const tracerConfig = {
     idGenerator: new AwsXRayIdGenerator(),
-    resources: resources,
     plugins: {
       https: {
         enabled: true,

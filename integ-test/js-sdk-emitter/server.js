@@ -18,7 +18,8 @@
 const tracer = require('./tracer')('');
 // eslint-disable-next-line import/order
 const http = require('http');
-const https = require('https');
+// const https = require('https');
+const request = require('request');
 const AWS = require('aws-sdk');
 const meter = require('./metric-emitter');
 
@@ -41,7 +42,6 @@ function handleRequest(req, res) {
   const url = req.url;
   const requestStartTime = new Date().getMilliseconds();
   // start recording a time for request
-  const url = req.url;
   try { 
     if (url === '/') {
       res.end('healthcheck');
@@ -55,7 +55,7 @@ function handleRequest(req, res) {
     }
     
     if (url === '/outgoing-http-call') {
-      https.get('https://aws.amazon.com');
+      request('https://aws.amazon.com');
       const traceID = returnTraceIdJson();
       res.end(traceID);
       meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
