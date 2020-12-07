@@ -1,10 +1,7 @@
 {
   "name": "test-app",
-  "version": "0.12.0",
-<<<<<<< HEAD
   "private": true,
-=======
->>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
+  "version": "0.12.1",
   "description": "test-application for javascript SDK",
   "main": "index.js",
   "scripts": {
@@ -21,20 +18,7 @@
   },
   "dependencies": {
     "@lerna/link": "^3.21.0",
-<<<<<<< HEAD
-    "@opentelemetry/api": "^0.12.0",
-<<<<<<< HEAD
-    "@opentelemetry/core": "^0.12.0",
-    "@opentelemetry/plugin-grpc": "^0.12.0",
-    "@opentelemetry/exporter-collector-grpc": "^0.12.0",
-    "@opentelemetry/node": "^0.12.0",
-    "@opentelemetry/plugin-http": "^0.12.0",
-    "@opentelemetry/resource-detector-aws": "^0.12.0",
-    "@opentelemetry/resources": "^0.12.0",
-=======
-=======
     "@opentelemetry/api": "0.12.0",
->>>>>>> 6bc54af... chore: update endpoints of integration apps and include aws js sdk tracing
     "@opentelemetry/context-base": "^0.12.0",
     "@opentelemetry/core": "^0.12.0",
     "@opentelemetry/exporter-collector-grpc": "file:opentelemetry-js/packages/opentelemetry-exporter-collector-grpc",
@@ -49,7 +33,6 @@
     "@opentelemetry/resource-detector-gcp": "^0.10.3-alpha.28",
     "@opentelemetry/resources": "^0.12.0",
     "@opentelemetry/sdk-node": "^0.12.0",
->>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
     "@opentelemetry/tracing": "^0.12.0",
     "AWSXRayIdGenerator": "file:../../packages/opentelemetry-id-generator-aws-xray",
     "AWSXRayPropagator": "file:../../packages/opentelemetry-propagator-aws-xray",
