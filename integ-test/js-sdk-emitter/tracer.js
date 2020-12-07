@@ -24,20 +24,10 @@ const { AWSXRayPropagator } = require('AWSXRayPropagator');
 const { AwsXRayIdGenerator } = require('AWSXRayIdGenerator');
 
 const { propagation, trace } = require("@opentelemetry/api");
-const { awsEc2Detector } = require('@opentelemetry/resource-detector-aws');
-const { detectResources } = require('@opentelemetry/resources');
 
 module.exports = (serviceName) => {
   // set global propagator
   propagation.setGlobalPropagator(new AWSXRayPropagator());
-  
-  var resources;
-  detectResources({ detectors: [awsEc2Detector] })
-  .then((res) => {
-    resources = res;
-    console.log("detected resource: " + JSON.stringify(resources));
-  })
-    .catch((e) => {console.log(e);});
 
   // create a provider for activating and tracking with AWS IdGenerator
   const tracerConfig = {

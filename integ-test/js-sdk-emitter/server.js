@@ -19,9 +19,6 @@ const tracer = require('./tracer')('');
 // eslint-disable-next-line import/order
 const http = require('http');
 const https = require('https');
-const fs = require('fs');
-// const requests = require('requests');
-<<<<<<< HEAD
 const AWS = require('aws-sdk');
 const meter = require('./metric-emitter');
 
