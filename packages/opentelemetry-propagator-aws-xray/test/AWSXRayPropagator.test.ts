@@ -15,8 +15,8 @@
  */
 import { ROOT_CONTEXT } from '@opentelemetry/context-base';
 import {
-  defaultGetter,
-  defaultSetter,
+  defaultTextMapGetter,
+  defaultTextMapSetter,
   SpanContext,
   TraceFlags,
   getActiveSpan,
@@ -53,7 +53,7 @@ describe('AWSXRayPropagator', () => {
       xrayPropagator.inject(
         setExtractedSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
-        defaultSetter
+        defaultTextMapSetter
       );
 
       assert.deepStrictEqual(
@@ -71,7 +71,7 @@ describe('AWSXRayPropagator', () => {
       xrayPropagator.inject(
         setExtractedSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
-        defaultSetter
+        defaultTextMapSetter
       );
 
       assert.deepStrictEqual(
@@ -92,7 +92,7 @@ describe('AWSXRayPropagator', () => {
       xrayPropagator.inject(
         setExtractedSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
-        defaultSetter
+        defaultTextMapSetter
       );
 
       // TODO: assert trace state when the propagator supports it
@@ -103,7 +103,7 @@ describe('AWSXRayPropagator', () => {
     });
 
     it('inject without spanContext - should inject nothing', () => {
-      xrayPropagator.inject(ROOT_CONTEXT, carrier, defaultSetter);
+      xrayPropagator.inject(ROOT_CONTEXT, carrier, defaultTextMapSetter);
 
       assert.deepStrictEqual(carrier, {});
     });
@@ -113,7 +113,7 @@ describe('AWSXRayPropagator', () => {
       xrayPropagator.inject(
         setExtractedSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
-        defaultSetter
+        defaultTextMapSetter
       );
 
       assert.deepStrictEqual(carrier, {});
@@ -124,7 +124,7 @@ describe('AWSXRayPropagator', () => {
     it('extract nothing from context', () => {
       // context remains untouched
       assert.deepStrictEqual(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter),
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter),
         ROOT_CONTEXT
       );
     });
@@ -133,7 +133,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, {
@@ -148,7 +148,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Parent=53995c3f42cd8ad8;Sampled=1;Root=1-8a3c60f7-d188f8fa79d48a391a778fa6';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, {
@@ -163,7 +163,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1;Foo=Bar';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       // TODO: assert additional fields when the propagator supports it
@@ -178,7 +178,7 @@ describe('AWSXRayPropagator', () => {
     it('extract empty header value - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] = '';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -188,7 +188,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-abcdefgh-ijklmnopabcdefghijklmnop;Parent=53995c3f42cd8ad8;Sampled=0';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -198,7 +198,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa600;Parent=53995c3f42cd8ad8;Sampled=0';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -208,7 +208,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1*8a3c60f7+d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1;Foo=Bar';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -218,7 +218,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=abcdefghijklmnop;Sampled=0';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -228,7 +228,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad800;Sampled=0';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -238,7 +238,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -248,7 +248,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=10220';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -258,7 +258,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=a';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
@@ -268,7 +268,7 @@ describe('AWSXRayPropagator', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=2-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1';
       const extractedSpanContext = getActiveSpan(
-        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultGetter)
+        xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
