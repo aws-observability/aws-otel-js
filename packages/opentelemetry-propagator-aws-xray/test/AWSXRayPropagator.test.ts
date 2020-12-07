@@ -273,5 +273,15 @@ describe('AWSXRayPropagator', () => {
 
       assert.deepStrictEqual(extractedSpanContext, undefined);
     });
+    describe('.fields()', () => {
+      it('should return a field with AWS X-Ray Trace ID header', () => {
+        const expectedField = xrayPropagator.fields();
+  
+        assert.deepStrictEqual(
+          [AWSXRAY_TRACE_ID_HEADER],
+          expectedField
+        );
+      });
+    });
   });
 });
