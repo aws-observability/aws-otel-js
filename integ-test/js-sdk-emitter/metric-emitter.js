@@ -13,11 +13,7 @@ const API_LATENCY_METRIC = 'latency';
     const metricExporter = new CollectorMetricExporter({
         serviceName: 'aws-otel',
         logger: new ConsoleLogger(LogLevel.DEBUG),
-<<<<<<< HEAD
         url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : 'localhost:55680'
-=======
-        url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : 'localhost:55681'
->>>>>>> 40dac27... feat: add metrics exporter on endpoint
     });
 
     /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */

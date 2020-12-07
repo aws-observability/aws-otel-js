@@ -18,26 +18,12 @@
 const tracer = require('./tracer')('');
 // eslint-disable-next-line import/order
 const http = require('http');
-<<<<<<< HEAD
-<<<<<<< HEAD
 const https = require('https');
 const fs = require('fs');
 // const requests = require('requests');
 <<<<<<< HEAD
 const AWS = require('aws-sdk');
 const meter = require('./metric-emitter');
-=======
-=======
-const https = require('https');
-const fs = require('fs');
->>>>>>> 6bc54af... chore: update endpoints of integration apps and include aws js sdk tracing
-const request = require('request');
-const AWS = require('aws-sdk');
->>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
-=======
-const AWS = require('aws-sdk');
-const meter = require('./metric-emitter');
->>>>>>> 40dac27... feat: add metrics exporter on endpoint
 
 /** Starts a HTTP server that receives requests on sample server address. */
 function startServer(address) {
@@ -54,29 +40,17 @@ function startServer(address) {
 }
 
 /** A function which handles requests and send response. */
-<<<<<<< HEAD
-<<<<<<< HEAD
 function handleRequest(req, res) {  
   const url = req.url;
   const requestStartTime = new Date().getMilliseconds();
   // start recording a time for request
-<<<<<<< HEAD
-=======
-function handleRequest(req, res) {
-=======
-function handleRequest(req, res) {  
->>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
   const url = req.url;
->>>>>>> eeb24ea... feat: add metrics path
-=======
->>>>>>> 40dac27... feat: add metrics exporter on endpoint
   try { 
     if (url === '/') {
       res.end('healthcheck');
     }
+
     if (url === '/aws-sdk-call') {
-<<<<<<< HEAD
-<<<<<<< HEAD
       const s3 = new AWS.S3();
       s3.listBuckets(() => {});
       const traceID = returnTraceIdJson();
@@ -87,76 +61,25 @@ function handleRequest(req, res) {
       https.get('https://aws.amazon.com');
       const traceID = returnTraceIdJson();
       res.end(traceID);
-
       meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
       meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
     }
   } catch (err) {
-      console.error(err)
+      console.error(err);
   }
 }
 
 //returns a traceId in X-Ray JSON format
-=======
-      const body = [];
-      req.on('error', (err) => console.log(err));
-      req.on('data', (chunk) => body.push(chunk));
-      const traceID = returnTraceIdJson()
-      req.on('end', () => {
-        res.end(traceID);
-      }, 2000);
-=======
-      const s3 = new AWS.S3();
-      s3.listBuckets(() => {});
-      const traceID = returnTraceIdJson();
-      res.end(traceID);
->>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
-    }
-    
-    if (url === '/outgoing-http-call') {
-      https.get('https://aws.amazon.com');
-      const traceID = returnTraceIdJson();
-      res.end(traceID);
-
-      meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
-      meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
-    }
-  } catch (err) {
-      console.error(err)
-  }
-}
-
-<<<<<<< HEAD
->>>>>>> eeb24ea... feat: add metrics path
-=======
-//returns a traceId in X-Ray JSON format
->>>>>>> 40dac27... feat: add metrics exporter on endpoint
 function returnTraceIdJson() {
   const traceId = tracer.getCurrentSpan().context().traceId;
   const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
   const traceIdJson = JSON.stringify({ "traceId" : xrayTraceId });
   return traceIdJson;
-<<<<<<< HEAD
 }
 
 //returns random payload size
 function mimicPayLoadSize() {
   return Math.random() * 1000;
-=======
->>>>>>> eeb24ea... feat: add metrics path
-}
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-startServer("localhost:8080");
-=======
-startServer("localhost:8080");
->>>>>>> 9aa89c8... feat: update tracing calls to aws in integration
-=======
-//returns random payload size
-function mimicPayLoadSize() {
-  return Math.random() * 1000;
 }
 
 startServer("localhost:8080");
->>>>>>> 40dac27... feat: add metrics exporter on endpoint
