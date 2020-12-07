@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@lerna/link": "^3.21.0",
+<<<<<<< HEAD
     "@opentelemetry/api": "^0.12.0",
 <<<<<<< HEAD
     "@opentelemetry/core": "^0.12.0",
@@ -31,11 +32,16 @@
     "@opentelemetry/resource-detector-aws": "^0.12.0",
     "@opentelemetry/resources": "^0.12.0",
 =======
+=======
+    "@opentelemetry/api": "0.12.0",
+>>>>>>> 6bc54af... chore: update endpoints of integration apps and include aws js sdk tracing
     "@opentelemetry/context-base": "^0.12.0",
     "@opentelemetry/core": "^0.12.0",
-    "@opentelemetry/exporter-collector-grpc": "^0.12.0",
+    "@opentelemetry/exporter-collector-grpc": "file:opentelemetry-js/packages/opentelemetry-exporter-collector-grpc",
+    "@opentelemetry/exporter-collector-proto": "file:opentelemetry-js/packages/opentelemetry-exporter-collector-proto",
     "@opentelemetry/node": "^0.12.0",
     "@opentelemetry/plugin-grpc": "^0.12.0",
+    "@opentelemetry/plugin-https": "^0.12.0",
     "@opentelemetry/plugin-http": "^0.12.0",
     "@opentelemetry/propagator-jaeger": "^0.9.0",
     "@opentelemetry/resource-detector-aws": "^0.10.3-alpha.28",
@@ -47,8 +53,6 @@
     "AWSXRayIdGenerator": "file:../../packages/opentelemetry-id-generator-aws-xray",
     "AWSXRayPropagator": "file:../../packages/opentelemetry-propagator-aws-xray",
     "aws-sdk": "^2.799.0",
-    "express": "^4.17.1",
-    "https": "^1.0.0",
     "opentelemetry-plugin-aws-sdk": "0.0.13"
   },
   "devDependencies": {

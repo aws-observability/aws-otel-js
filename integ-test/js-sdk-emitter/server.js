@@ -15,9 +15,11 @@
  */
 
 'use strict';
-const tracer = require('./tracer')('example-server');
+const tracer = require('./tracer')('');
 // eslint-disable-next-line import/order
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const request = require('request');
 const AWS = require('aws-sdk');
 
@@ -44,18 +46,18 @@ function handleRequest(req, res) {
     }
     if (url === '/aws-sdk-call') {
       const s3 = new AWS.S3();
-      s3.listBuckets((err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      s3.listBuckets(() => {});
       const traceID = returnTraceIdJson();
       res.end(traceID);
     }
 
     if (url === '/outgoing-http-call') {
+      // const options = {
+      //   key: fs.readFileSync('./server-key.pem'),
+      //   cert: fs.readFileSync('./server-cert.pem'),
+      // };
       // require('./metrics');
-      http.get('http://aws.amazon.com');
+      request.get('https://aws.amazon.com');
       const traceID = returnTraceIdJson();
       res.end(traceID);
     }
