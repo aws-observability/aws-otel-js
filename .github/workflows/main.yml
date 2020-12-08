@@ -80,6 +80,7 @@ jobs:
                      -e INSTANCE_ID=${{ github.run_id }}-${{ github.run_number }} \
                      -e LISTEN_ADDRESS=0.0.0.0:8080 \
                      -e OTEL_EXPORTER_OTLP_ENDPOINT=172.17.0.1:55680 \
+                     -e OTEL_RESOURCE_ATTRIBUTES="aws-otel-integ-test"
                      -e OTEL_EXPORTER_OTLP_INSECURE=True \
                      -p 8080:8080 ${{ steps.login-ecr.outputs.registry }}/otel-test/${{ matrix.instrumentation-type}}-instrumentation/${{ matrix.app-platform }}:${{ github.sha }} &
       
@@ -96,7 +97,7 @@ jobs:
       // TODO (kkelvinlo) Once OpenTelemetry-JS updates issues about semantic convention for attributes to map to int or collector-contrib 
       // handles doubles use standard data template
        - name: Run testing suite
-         run: ./gradlew :validator:run --args='-c temporary-otel-js-trace-metric-validation.yml --endpoint http://127.0.0.1:8080 --metric-namespace -t ${{ github.run_id }}-${{ github.run_number }}'
+         run: ./gradlew :validator:run --args='-c js-otel-trace-metric-validation.yml --endpoint http://127.0.0.1:8080 --metric-namespace -t ${{ github.run_id }}-${{ github.run_number }}'
          env:
           AWS_ACCESS_KEY_ID: ${{ secrets.INTEG_TEST_AWS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.INTEG_TEST_AWS_KEY_SECRET }}

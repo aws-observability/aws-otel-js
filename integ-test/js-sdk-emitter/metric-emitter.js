@@ -4,14 +4,12 @@ const { ConsoleLogger, LogLevel } = require('@opentelemetry/core');
 const { CollectorMetricExporter } = require('@opentelemetry/exporter-collector-grpc');
 const { MeterProvider } = require('@opentelemetry/metrics');
 
-const DIMENSION_STATUS_CODE = 'statusCode';
-const DIMENSION_API_NAME = 'apiName';
 const API_COUNTER_METRIC = 'apiBytesSent';
 const API_LATENCY_METRIC = 'latency';
 
 /** The OTLP Metrics gRPC Collector */
 const metricExporter = new CollectorMetricExporter({
-    serviceName: 'aws-otel',
+    serviceName: process.env.OTEL_RESOURCE_ATTRIBUTES,
     logger: new ConsoleLogger(LogLevel.DEBUG),
     url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : 'localhost:55680'
 });
@@ -19,8 +17,8 @@ const metricExporter = new CollectorMetricExporter({
 /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */
 const meter = new MeterProvider({
     exporter: metricExporter,
-    interval: 10000,
-}).getMeter('aws-otel-js');
+    interval: 1000,
+}).getMeter('aws-otel');
 
 /**  grabs instanceId and append to metric name to check individual metric for integration test */
 var latencyMetricName = API_LATENCY_METRIC;
@@ -44,14 +42,14 @@ const requestLatency = meter.createValueRecorder(latencyMetricName, {
 //** binds request latency metric with returnTime */
 function emitReturnTimeMetric(returnTime, apiName, statusCode) {
     console.log('emit metric with return time ' + returnTime + ', ' + apiName + ', ' + statusCode);
-    const labels = { DIMENSION_API_NAME: apiName, DIMENSION_STATUS_CODE: statusCode };
+    const labels = { 'apiName': apiName, 'statusCode': statusCode };
     requestLatency.bind(labels).record(returnTime);
 }
 
 //** emitsPayLoadMetrics() Binds payload Metric with number of bytes */
 function emitsPayloadMetric(bytes, apiName, statusCode) {
     console.log('emit metric with http request size ' + bytes + ' byte, ' + apiName);
-    const labels = { DIMENSION_API_NAME: apiName, DIMENSION_STATUS_CODE: statusCode };
+    const labels = { 'apiName': apiName, 'statusCode': statusCode };
     payloadMetric.bind(labels).add(bytes);
 }
 

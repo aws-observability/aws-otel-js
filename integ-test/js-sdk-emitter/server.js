@@ -15,7 +15,7 @@
  */
 
 'use strict';
-const tracer = require('./tracer')('');
+const tracer = require('./tracer')('aws-otel-integ-test');
 // eslint-disable-next-line import/order
 const http = require('http');
 // const https = require('https');
@@ -55,7 +55,7 @@ function handleRequest(req, res) {
     }
 
     if (url === '/outgoing-http-call') {
-      request('https://aws.amazon.com');
+      http.get('http://aws.amazon.com');
       const traceID = returnTraceIdJson();
       res.end(traceID);
       meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
