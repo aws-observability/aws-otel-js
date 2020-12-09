@@ -1,7 +1,7 @@
 'use strict';
 
 const benchmark = require('./benchmark');
-const { AwsXRayIdGenerator } = require('../packages/opentelemetry-id-generator-aws-xray');
+const { AwsXRayIdGenerator } = require('../packages/opentelemetry-id-generator-aws-xray/build/src');
 
 
 const setups = [
