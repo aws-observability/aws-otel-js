@@ -2,7 +2,7 @@
 
 ## How to run
 
-To run your benchmark, just:
+To run the benchmarks, run the following command:
 
 ```sh
 npm i && npm run bench
