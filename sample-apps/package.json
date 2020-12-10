@@ -25,8 +25,8 @@
     "@opentelemetry/plugin-https": "^0.13.0",
     "@opentelemetry/plugin-http": "^0.13.0",
     "@opentelemetry/tracing": "^0.13.0",
-    "AWSXRayIdGenerator": "file:../../packages/opentelemetry-id-generator-aws-xray",
-    "AWSXRayPropagator": "file:../../packages/opentelemetry-propagator-aws-xray",
+    "AWSXRayIdGenerator": "file../packages/opentelemetry-id-generator-aws-xray",
+    "AWSXRayPropagator": "file:../packages/opentelemetry-propagator-aws-xray",
     "aws-sdk": "^2.799.0",
     "opentelemetry-plugin-aws-sdk": "0.0.13"
   },
