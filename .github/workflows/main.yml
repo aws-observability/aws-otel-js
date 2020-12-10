@@ -55,7 +55,7 @@ jobs:
         with:
           file: sample-apps/Dockerfile
           context: .
-          tags: ${{ secrets.INTEG_TEST_AWS_KEY_ID }}/aws-observability/js-sample-app:${{ github.sha }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/aws-observability/js-sample-app:${{ github.sha }}
           push: true
         
   run_app_test_framework:
