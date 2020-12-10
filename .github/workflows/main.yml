@@ -66,9 +66,9 @@ jobs:
       - name: Setup and Run Otel collector
         run: |
           docker-compose -f .github/collector/docker-compose.yml up &
-          env:
-            ACCESS_KEY: ${{ secrets.INTEG_TEST_AWS_KEY_ID }}
-            SECRET_ACCESS_KEY: ${{ secrets.INTEG_TEST_AWS_KEY_SECRET }}
+        env:
+          ACCESS_KEY: ${{ secrets.INTEG_TEST_AWS_KEY_ID }}
+          SECRET_ACCESS_KEY: ${{ secrets.INTEG_TEST_AWS_KEY_SECRET }}
 
       - name: Run Http App with Instrumentation
         run: |
