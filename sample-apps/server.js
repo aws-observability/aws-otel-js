@@ -79,4 +79,4 @@ function mimicPayLoadSize() {
   return Math.random() * 1000;
 }
 
-startServer(process.env.LISTEN_ADDRESS);
+startServer('localhost:8080');

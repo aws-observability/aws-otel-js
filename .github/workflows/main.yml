@@ -1,8 +1,5 @@
 name: Main
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   build:
@@ -58,7 +55,7 @@ jobs:
         with:
           file: integ-test/js-sdk-emitter/Dockerfile
           context: .
-          tags: 611364707713.dkr.ecr.us-west-2.amazonaws.com/amazon/aws-otel-js-sample-app:${{ github.sha }}
+          tags: ${{ secrets.INTEG_TEST_AWS_KEY_ID }}/aws-observability/js-sample-app:${{ github.sha }}
           push: true
         
     run_app_test_framework:
@@ -82,7 +79,7 @@ jobs:
                      -e OTEL_EXPORTER_OTLP_ENDPOINT=172.17.0.1:55680 \
                      -e OTEL_RESOURCE_ATTRIBUTES="aws-otel-integ-test"
                      -e OTEL_EXPORTER_OTLP_INSECURE=True \
-                     -p 8080:8080 ${{ steps.login-ecr.outputs.registry }}/otel-test/${{ matrix.instrumentation-type}}-instrumentation/${{ matrix.app-platform }}:${{ github.sha }} &
+                     -p 8080:8080 ${{ steps.login-ecr.outputs.registry }}/aws-observability/js-sample-app:${{ github.sha }} &
       
       - name: Directory to checkout test framework
         run: mkdir test-framework 
@@ -94,10 +91,8 @@ jobs:
           ref: terraform
           path: test-framework
 
-      ## TODO (kkelvinlo) Once OpenTelemetry-JS updates issues about semantic convention for attributes to map to int or collector-contrib 
-      ## handles doubles use standard data template
        - name: Run testing suite
-         run: ./gradlew :validator:run --args='-c js-otel-trace-validation.yml --endpoint http://127.0.0.1:8080 --metric-namespace -t ${{ github.run_id }}-${{ github.run_number }}'
+         run: ./gradlew :validator:run --args='-c js-otel-trace-validation.yml --endpoint http://127.0.0.1:8080 --metric-namespace aws-otel-integ-test -t ${{ github.run_id }}-${{ github.run_number }}'
          env:
           AWS_ACCESS_KEY_ID: ${{ secrets.INTEG_TEST_AWS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.INTEG_TEST_AWS_KEY_SECRET }}
