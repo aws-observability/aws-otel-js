@@ -55,7 +55,7 @@ jobs:
         with:
           file: sample-apps/Dockerfile
           context: .
-          tags: "${{ steps.login-ecr.outputs.registry }}/aws-observability/js-sample-app:${{ github.sha }}"
+          tags: 611364707713.dkr.ecr.us-west-2.amazonaws.com/amazon/aws-otel-js-sample-app:${{ github.sha }}
           push: true
         
   run_app_test_framework:
@@ -80,7 +80,7 @@ jobs:
                      -e OTEL_EXPORTER_OTLP_ENDPOINT=172.17.0.1:55680 \
                      -e OTEL_RESOURCE_ATTRIBUTES="aws-otel-integ-test"
                      -e OTEL_EXPORTER_OTLP_INSECURE=True \
-                     -p 8080:8080 ${{ steps.login-ecr.outputs.registry }}/aws-observability/js-sample-app:${{ github.sha }} &
+                     -p 8080:8080 611364707713.dkr.ecr.us-west-2.amazonaws.com/amazon/aws-otel-js-sample-app:${{ github.sha }} &
       
       - name: Directory to checkout test framework
         run: mkdir test-framework 
