@@ -9,7 +9,7 @@ const API_LATENCY_METRIC = 'latency';
 
 /** The OTLP Metrics gRPC Collector */
 const metricExporter = new CollectorMetricExporter({
-    serviceName: process.env.OTEL_RESOURCE_ATTRIBUTES ? process.env.OTEL_RESOURCE_ATTRIBUTES['service.name'] : 'aws-otel-integ-test',
+    serviceName: process.env.OTEL_RESOURCE_ATTRIBUTES ? process.env.OTEL_RESOURCE_ATTRIBUTES : 'aws-otel-integ-test',
     logger: new ConsoleLogger(LogLevel.DEBUG),
     url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : 'localhost:55680'
 });
