@@ -1,0 +1,37 @@
+{
+  "name": "test-app",
+  "private": true,
+  "version": "0.12.1",
+  "description": "test-application for javascript SDK",
+  "main": "index.js",
+  "scripts": {
+    "start:traces": "node server.js",
+    "start:metrics": "node metrics.js"
+  },
+  "keywords": [
+    "opentelemetry",
+    "http",
+    "tracing"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "0.13.0",
+    "@opentelemetry/context-base": "^0.13.0",
+    "@opentelemetry/core": "^0.13.0",
+    "@opentelemetry/exporter-collector-grpc": "^0.13.0",
+    "@opentelemetry/node": "^0.13.0",
+    "@opentelemetry/plugin-https": "^0.13.0",
+    "@opentelemetry/plugin-http": "^0.13.0",
+    "@opentelemetry/tracing": "^0.13.0",
+    "AWSXRayIdGenerator": "file:../packages/opentelemetry-id-generator-aws-xray",
+    "AWSXRayPropagator": "file:../packages/opentelemetry-propagator-aws-xray",
+    "aws-sdk": "^2.799.0",
+    "opentelemetry-plugin-aws-sdk": "0.0.13"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.0",
+    "@lerna/link": "^3.21.0"
+  }
+}
