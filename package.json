@@ -1,6 +1,6 @@
 {
   "name": "aws-otel-js",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Host AWS X-Ray vendor-specific components for OTel-JS-SDK auto-instrumentation.",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
