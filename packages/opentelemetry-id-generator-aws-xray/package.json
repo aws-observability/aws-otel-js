@@ -1,6 +1,6 @@
 {
   "name": "@aws/otel-aws-xray-id-generator",
-  "version": "0.13.1",
+  "version": "0.13.0",
   "description": "AWS X-Ray ID generator for OpenTelemetry",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
