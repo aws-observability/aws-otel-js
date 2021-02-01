@@ -19,8 +19,8 @@ import {
   defaultTextMapSetter,
   SpanContext,
   TraceFlags,
-  getActiveSpan,
-  setExtractedSpanContext,
+  getSpan,
+  setSpanContext,
   INVALID_SPAN_CONTEXT,
 } from '@opentelemetry/api';
 import { TraceState } from '@opentelemetry/core';
@@ -29,6 +29,8 @@ import {
   AWSXRayPropagator,
   AWSXRAY_TRACE_ID_HEADER,
 } from '../src/AWSXRayPropagator';
+
+import { describe } from 'mocha';
 
 describe('AWSXRayPropagator', () => {
   const xrayPropagator = new AWSXRayPropagator();
@@ -51,7 +53,7 @@ describe('AWSXRayPropagator', () => {
         traceFlags: SAMPLED_TRACE_FLAG,
       };
       xrayPropagator.inject(
-        setExtractedSpanContext(ROOT_CONTEXT, spanContext),
+        setSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
         defaultTextMapSetter
       );
@@ -69,7 +71,7 @@ describe('AWSXRayPropagator', () => {
         traceFlags: NOT_SAMPLED_TRACE_FLAG,
       };
       xrayPropagator.inject(
-        setExtractedSpanContext(ROOT_CONTEXT, spanContext),
+        setSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
         defaultTextMapSetter
       );
@@ -90,7 +92,7 @@ describe('AWSXRayPropagator', () => {
         traceState: traceState,
       };
       xrayPropagator.inject(
-        setExtractedSpanContext(ROOT_CONTEXT, spanContext),
+        setSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
         defaultTextMapSetter
       );
@@ -111,7 +113,7 @@ describe('AWSXRayPropagator', () => {
     it('inject default invalid spanContext - should inject nothing', () => {
       const spanContext: SpanContext = INVALID_SPAN_CONTEXT;
       xrayPropagator.inject(
-        setExtractedSpanContext(ROOT_CONTEXT, spanContext),
+        setSpanContext(ROOT_CONTEXT, spanContext),
         carrier,
         defaultTextMapSetter
       );
@@ -132,7 +134,7 @@ describe('AWSXRayPropagator', () => {
     it('should extract sampled context', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -147,7 +149,7 @@ describe('AWSXRayPropagator', () => {
     it('should extract sampled context with arbitrary order', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Parent=53995c3f42cd8ad8;Sampled=1;Root=1-8a3c60f7-d188f8fa79d48a391a778fa6';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -162,7 +164,7 @@ describe('AWSXRayPropagator', () => {
     it('should extract context with additional fields', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1;Foo=Bar';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -177,7 +179,7 @@ describe('AWSXRayPropagator', () => {
 
     it('extract empty header value - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] = '';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -187,7 +189,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid traceId - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-abcdefgh-ijklmnopabcdefghijklmnop;Parent=53995c3f42cd8ad8;Sampled=0';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -197,7 +199,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid traceId size - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa600;Parent=53995c3f42cd8ad8;Sampled=0';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -207,7 +209,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid traceId delimiter - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1*8a3c60f7+d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1;Foo=Bar';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -217,7 +219,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid spanId - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=abcdefghijklmnop;Sampled=0';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -227,7 +229,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid spanId size - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad800;Sampled=0';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -237,7 +239,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid traceFlags - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -247,7 +249,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid traceFlags length - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=10220';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -257,7 +259,7 @@ describe('AWSXRayPropagator', () => {
     it('extract nonnumeric invalid traceFlags - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=1-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=a';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
@@ -267,7 +269,7 @@ describe('AWSXRayPropagator', () => {
     it('extract invalid aws xray version - should return undefined', () => {
       carrier[AWSXRAY_TRACE_ID_HEADER] =
         'Root=2-8a3c60f7-d188f8fa79d48a391a778fa6;Parent=53995c3f42cd8ad8;Sampled=1';
-      const extractedSpanContext = getActiveSpan(
+      const extractedSpanContext = getSpan(
         xrayPropagator.extract(ROOT_CONTEXT, carrier, defaultTextMapGetter)
       )?.context();
 
