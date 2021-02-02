@@ -22,16 +22,16 @@
     "@opentelemetry/core": "^0.13.0",
     "@opentelemetry/exporter-collector-grpc": "^0.13.0",
     "@opentelemetry/node": "^0.13.0",
-    "@opentelemetry/plugin-https": "^0.13.0",
     "@opentelemetry/plugin-http": "^0.13.0",
+    "@opentelemetry/plugin-https": "^0.13.0",
     "@opentelemetry/tracing": "^0.13.0",
+    "aws-sdk": "^2.799.0",
     "AWSXRayIdGenerator": "file:../packages/opentelemetry-id-generator-aws-xray",
     "AWSXRayPropagator": "file:../packages/opentelemetry-propagator-aws-xray",
-    "aws-sdk": "^2.799.0",
     "opentelemetry-plugin-aws-sdk": "0.0.13"
   },
   "devDependencies": {
-    "cross-env": "^6.0.0",
-    "@lerna/link": "^3.21.0"
+    "@lerna/link": "^3.21.0",
+    "cross-env": "^6.0.0"
   }
 }

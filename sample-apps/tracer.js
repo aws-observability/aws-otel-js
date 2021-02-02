@@ -16,6 +16,7 @@
 
 'use strict'
 
+const { LogLevel } = require("@opentelemetry/core");
 const { SimpleSpanProcessor, ConsoleSpanExporter } = require("@opentelemetry/tracing");
 const { NodeTracerProvider } = require('@opentelemetry/node');
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
@@ -31,6 +32,7 @@ module.exports = (serviceName) => {
 
   // create a provider for activating and tracking with AWS IdGenerator
   const tracerConfig = {
+    logLevel: LogLevel.ERROR,
     idGenerator: new AwsXRayIdGenerator(),
     plugins: {
       https: {
