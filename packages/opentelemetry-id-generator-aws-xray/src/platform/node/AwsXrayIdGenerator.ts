@@ -30,26 +30,22 @@ export class AwsXRayIdGenerator implements IdGenerator {
    * characters corresponding to 128 bits. The first 4 bytes correspond to the current
    * time, in seconds, as per X-Ray trace ID format.
    */
-  generateTraceId = generateTraceIdImpl;
+  generateTraceId = (): string => {
+    const epoch = Math.floor(Date.now() / 1000).toString(16);
+    const rand = generateRandomBytes(TRACE_ID_BYTES - EPOCH_BYTES);
+    return epoch + rand;
+  };
 
   /**
    * Returns a random 8-byte span ID formatted/encoded as a 16 lowercase hex
    * characters corresponding to 64 bits.
    */
-  generateSpanId = generateSpanIdImpl;
+  generateSpanId = (): string => {
+    return generateRandomBytes(SPAN_ID_BYTES);
+  };
 }
 
 const SHARED_BUFFER = Buffer.allocUnsafe(TRACE_ID_BYTES);
-
-function generateTraceIdImpl(): string {
-  const epoch = Math.floor(Date.now() / 1000).toString(16);
-  const rand = generateRandomBytes(TRACE_ID_BYTES - EPOCH_BYTES);
-  return epoch + rand;
-}
-
-function generateSpanIdImpl(): string {
-  return generateRandomBytes(SPAN_ID_BYTES);
-}
 
 function generateRandomBytes(bytes: number): string {
   for (let i = 0; i < bytes / 4; i++) {

@@ -67,12 +67,11 @@ export class AWSXRayPropagator implements TextMapPropagator {
     const timestamp = otTraceId.substring(0, TRACE_ID_FIRST_PART_LENGTH);
     const randomNumber = otTraceId.substring(TRACE_ID_FIRST_PART_LENGTH);
 
-    const xrayTraceId = `1-${timestamp}-${randomNumber}`;
     const parentId = spanContext.spanId;
     const samplingFlag = spanContext.traceFlags ? IS_SAMPLED : NOT_SAMPLED;
     // TODO: Add OT trace state to the X-Ray trace header
 
-    const traceHeader = `Root=${xrayTraceId};Parent=${parentId};Sampled=${samplingFlag}`;
+    const traceHeader = `Root=1-${timestamp}-${randomNumber};Parent=${parentId};Sampled=${samplingFlag}`;
     setter.set(carrier, AWSXRAY_TRACE_ID_HEADER, traceHeader);
   }
 
