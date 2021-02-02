@@ -26,8 +26,8 @@ import {
   isValidTraceId,
   INVALID_TRACEID,
   INVALID_SPANID,
-  getParentSpanContext,
-  setExtractedSpanContext,
+  getSpanContext,
+  setSpanContext,
   INVALID_SPAN_CONTEXT,
 } from '@opentelemetry/api';
 
@@ -47,7 +47,6 @@ const TRACE_ID_FIRST_PART_LENGTH = 8;
 const PARENT_ID_KEY = 'Parent';
 
 const SAMPLED_FLAG_KEY = 'Sampled';
-const SAMPLED_FLAG_LENGTH = 1;
 const IS_SAMPLED = '1';
 const NOT_SAMPLED = '0';
 
@@ -61,34 +60,18 @@ const NOT_SAMPLED = '0';
  */
 export class AWSXRayPropagator implements TextMapPropagator {
   inject(context: Context, carrier: unknown, setter: TextMapSetter) {
-    const spanContext = getParentSpanContext(context);
+    const spanContext = getSpanContext(context);
     if (!spanContext || !isSpanContextValid(spanContext)) return;
 
     const otTraceId = spanContext.traceId;
+    const timestamp = otTraceId.substring(0, TRACE_ID_FIRST_PART_LENGTH);
+    const randomNumber = otTraceId.substring(TRACE_ID_FIRST_PART_LENGTH);
 
-    const xrayTraceId =
-      TRACE_ID_VERSION +
-      TRACE_ID_DELIMITER +
-      otTraceId.substring(0, TRACE_ID_FIRST_PART_LENGTH) +
-      TRACE_ID_DELIMITER +
-      otTraceId.substring(TRACE_ID_FIRST_PART_LENGTH);
     const parentId = spanContext.spanId;
     const samplingFlag = spanContext.traceFlags ? IS_SAMPLED : NOT_SAMPLED;
     // TODO: Add OT trace state to the X-Ray trace header
 
-    const traceHeader =
-      TRACE_ID_KEY +
-      KV_DELIMITER +
-      xrayTraceId +
-      TRACE_HEADER_DELIMITER +
-      PARENT_ID_KEY +
-      KV_DELIMITER +
-      parentId +
-      TRACE_HEADER_DELIMITER +
-      SAMPLED_FLAG_KEY +
-      KV_DELIMITER +
-      samplingFlag;
-
+    const traceHeader = `Root=1-${timestamp}-${randomNumber};Parent=${parentId};Sampled=${samplingFlag}`;
     setter.set(carrier, AWSXRAY_TRACE_ID_HEADER, traceHeader);
   }
 
@@ -96,7 +79,7 @@ export class AWSXRayPropagator implements TextMapPropagator {
     const spanContext = this.getSpanContextFromHeader(carrier, getter);
     if (!isSpanContextValid(spanContext)) return context;
 
-    return setExtractedSpanContext(context, spanContext);
+    return setSpanContext(context, spanContext);
   }
 
   fields(): string[] {
@@ -200,10 +183,7 @@ export class AWSXRayPropagator implements TextMapPropagator {
   }
 
   private _parseTraceFlag(xraySampledFlag: string): TraceFlags | null {
-    if (
-      xraySampledFlag.length === SAMPLED_FLAG_LENGTH &&
-      xraySampledFlag === NOT_SAMPLED
-    ) {
+    if (xraySampledFlag === NOT_SAMPLED) {
       return TraceFlags.NONE;
     }
     if (xraySampledFlag === IS_SAMPLED) {
