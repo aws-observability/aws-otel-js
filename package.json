@@ -66,11 +66,10 @@
     }
   },
   "dependencies": {
-    "@opentelemetry/context-base": "^0.13.0",
-    "@opentelemetry/api": "^0.13.0",
-    "@opentelemetry/core": "^0.13.0",
-    "@opentelemetry/tracing": "^0.13.0",
-    "@opentelemetry/node": "^0.13.0",
-    "@opentelemetry/metrics": "^0.13.0"
+    "@opentelemetry/api": "^0.18.0",
+    "@opentelemetry/core": "^0.18.0",
+    "@opentelemetry/metrics": "^0.18.0",
+    "@opentelemetry/node": "^0.18.0",
+    "@opentelemetry/tracing": "^0.18.0"
   }
 }

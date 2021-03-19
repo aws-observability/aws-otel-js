@@ -46,17 +46,19 @@ function handleRequest(req, res) {
 
     if (url === '/aws-sdk-call') {
       const s3 = new AWS.S3();
-      s3.listBuckets(() => { });
       const traceID = returnTraceIdJson();
-      res.end(traceID);
+      s3.listBuckets(() => {
+        res.end(traceID);
+      });
     }
 
     if (url === '/outgoing-http-call') {
-      http.get('http://aws.amazon.com');
       const traceID = returnTraceIdJson();
-      res.end(traceID);
-      meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
-      meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
+      http.get('http://aws.amazon.com', () => {
+        res.end(traceID);
+        meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
+        meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
+      });
     }
   } catch (err) {
     console.error(err);
@@ -67,7 +69,7 @@ function handleRequest(req, res) {
 function returnTraceIdJson() {
   const traceId = tracer.getCurrentSpan().context().traceId;
   const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
-  const traceIdJson = JSON.stringify({ "traceId": xrayTraceId });
+  const traceIdJson = JSON.stringify({"traceId": xrayTraceId});
   return traceIdJson;
 }
 

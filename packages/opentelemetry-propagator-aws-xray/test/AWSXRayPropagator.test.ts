@@ -13,7 +13,6 @@
  * permissions and limitations under the License.
  *
  */
-import { ROOT_CONTEXT } from '@opentelemetry/context-base';
 import {
   defaultTextMapGetter,
   defaultTextMapSetter,
@@ -22,6 +21,7 @@ import {
   getSpan,
   setSpanContext,
   INVALID_SPAN_CONTEXT,
+  ROOT_CONTEXT
 } from '@opentelemetry/api';
 import { TraceState } from '@opentelemetry/core';
 import * as assert from 'assert';
@@ -278,7 +278,7 @@ describe('AWSXRayPropagator', () => {
     describe('.fields()', () => {
       it('should return a field with AWS X-Ray Trace ID header', () => {
         const expectedField = xrayPropagator.fields();
-  
+
         assert.deepStrictEqual(
           [AWSXRAY_TRACE_ID_HEADER],
           expectedField
