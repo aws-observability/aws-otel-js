@@ -23,8 +23,7 @@ const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-gr
 const { AWSXRayPropagator } = require('AWSXRayPropagator');
 const { AwsXRayIdGenerator } = require('AWSXRayIdGenerator');
 
-const { propagation, trace } = require("@opentelemetry/api");
-const { DiagConsoleLogger, DiagLogLevel, diag } = require('@opentelemetry/api');
+const { DiagConsoleLogger, DiagLogLevel, diag, propagation, trace } = require("@opentelemetry/api");
 
 module.exports = (serviceName) => {
   // set global propagator
