@@ -16,36 +16,25 @@
 
 'use strict'
 
-const { SimpleSpanProcessor, ConsoleSpanExporter } = require("@opentelemetry/tracing");
+const { SimpleSpanProcessor, ConsoleSpanExporter } = require('@opentelemetry/tracing');
 const { NodeTracerProvider } = require('@opentelemetry/node');
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 
-const { AWSXRayPropagator } = require('AWSXRayPropagator');
-const { AwsXRayIdGenerator } = require('AWSXRayIdGenerator');
+const { registerInstrumentations } = require('@opentelemetry/instrumentation');
+const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
+const { AwsInstrumentation } = require('opentelemetry-instrumentation-aws-sdk');
 
-const { DiagConsoleLogger, DiagLogLevel, diag, propagation, trace } = require("@opentelemetry/api");
+const { AWSXRayPropagator } = require('@opentelemetry/propagator-aws-xray');
+const { AWSXRayIdGenerator } = require('@opentelemetry/id-generator-aws-xray');
+
+const { DiagConsoleLogger, DiagLogLevel, diag, trace } = require('@opentelemetry/api');
 
 module.exports = (serviceName) => {
-  // set global propagator
-  propagation.setGlobalPropagator(new AWSXRayPropagator());
   diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
 
   // create a provider for activating and tracking with AWS IdGenerator
   const tracerConfig = {
-    idGenerator: new AwsXRayIdGenerator(),
-    plugins: {
-      https: {
-        enabled: true,
-        // You may use a package name or absolute path to the file.
-        path: '@opentelemetry/plugin-https',
-        // https plugin options
-      },
-      "aws-sdk": {
-        enabled: true,
-        // You may use a package name or absolute path to the file.
-        path: "opentelemetry-plugin-aws-sdk",
-      },
-    },
+    idGenerator: new AWSXRayIdGenerator(),
   };
   const tracerProvider = new NodeTracerProvider(tracerConfig);
 
@@ -57,9 +46,20 @@ module.exports = (serviceName) => {
   tracerProvider.addSpanProcessor(new SimpleSpanProcessor(otlpExporter));
   tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
-  // Register the tracer
-  tracerProvider.register();
+  // Register the tracer with X-Ray propagator
+  tracerProvider.register({
+    propagator: new AWSXRayPropagator()
+  });
 
-  // Return an tracer instance
+  registerInstrumentations({
+    instrumentations: [
+      new HttpInstrumentation(),
+      new AwsInstrumentation({
+        suppressInternalInstrumentation: true
+      }),
+    ]
+  });
+
+  // Return a tracer instance
   return trace.getTracer("awsxray-tests");
 }

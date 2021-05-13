@@ -19,6 +19,7 @@ const tracer = require('./tracer')('aws-otel-integ-test');
 const http = require('http');
 const AWS = require('aws-sdk');
 const meter = require('./metric-emitter');
+const api = require('@opentelemetry/api');
 
 /** Starts a HTTP server that receives requests on sample server address. */
 function startServer(address) {
@@ -46,14 +47,14 @@ function handleRequest(req, res) {
 
     if (url === '/aws-sdk-call') {
       const s3 = new AWS.S3();
-      const traceID = returnTraceIdJson();
+      const traceID = getTraceIdJson();
       s3.listBuckets(() => {
         res.end(traceID);
       });
     }
 
     if (url === '/outgoing-http-call') {
-      const traceID = returnTraceIdJson();
+      const traceID = getTraceIdJson();
       http.get('http://aws.amazon.com', () => {
         res.end(traceID);
         meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
@@ -66,8 +67,8 @@ function handleRequest(req, res) {
 }
 
 //returns a traceId in X-Ray JSON format
-function returnTraceIdJson() {
-  const traceId = tracer.getCurrentSpan().context().traceId;
+function getTraceIdJson() {
+  const traceId = api.getSpan(api.context.active()).context().traceId;
   const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
   const traceIdJson = JSON.stringify({"traceId": xrayTraceId});
   return traceIdJson;
