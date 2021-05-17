@@ -13,9 +13,7 @@ Run the following commands to start the sample app:
 
 ```bash
 git clone https://github.com/aws-observability/aws-otel-js.git
-cd aws-otel-js
-npx lerna bootstrap
-cd sample-apps
+cd aws-otel-js/sample-apps
 npm install
 npm rb
 export LISTEN_ADDRESS=localhost:8080

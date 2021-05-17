@@ -17,17 +17,17 @@
     "node": ">=8"
   },
   "dependencies": {
-    "@opentelemetry/api": "0.18.0",
-    "@opentelemetry/core": "^0.18.0",
-    "@opentelemetry/exporter-collector-grpc": "^0.18.0",
-    "@opentelemetry/node": "^0.18.0",
-    "@opentelemetry/plugin-http": "^0.18.0",
-    "@opentelemetry/plugin-https": "^0.18.0",
-    "@opentelemetry/tracing": "^0.18.0",
+    "@opentelemetry/api": "^1.0.0-rc.0",
+    "@opentelemetry/core": "^0.19.0",
+    "@opentelemetry/exporter-collector-grpc": "^0.19.0",
+    "@opentelemetry/node": "^0.19.0",
+    "@opentelemetry/instrumentation": "^0.19.0",
+    "@opentelemetry/instrumentation-http": "^0.19.0",
+    "@opentelemetry/tracing": "^0.19.0",
     "aws-sdk": "^2.799.0",
-    "AWSXRayIdGenerator": "file:../packages/opentelemetry-id-generator-aws-xray",
-    "AWSXRayPropagator": "file:../packages/opentelemetry-propagator-aws-xray",
-    "opentelemetry-plugin-aws-sdk": "0.0.13"
+    "@opentelemetry/id-generator-aws-xray": "^0.16.0",
+    "@opentelemetry/propagator-aws-xray": "^0.16.0",
+    "opentelemetry-instrumentation-aws-sdk": "^0.4.1"
   },
   "devDependencies": {
     "@lerna/link": "^3.21.0",
