@@ -47,7 +47,7 @@ const tracerProvider = new NodeTracerProvider({
 });
 
 tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-// Expects Collector at default http://localhost:4317
+// Expects Collector at env variable `OTEL_EXPORTER_OTLP_ENDPOINT`, otherwise, http://localhost:4317
 tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new CollectorTraceExporter()));
 
 tracerProvider.register({

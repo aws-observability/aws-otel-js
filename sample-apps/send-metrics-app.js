@@ -13,7 +13,7 @@ const meter = new MeterProvider({
   resource: Resource.default().merge(new Resource({
     [ResourceAttributes.SERVICE_NAME]: "aws-otel-js-sample"
   })),
-  // Expects Collector at default http://localhost:4317
+  // Expects Collector at env variable `OTEL_EXPORTER_OTLP_ENDPOINT`, otherwise, http://localhost:4317
   exporter: new CollectorMetricExporter(),
   interval: 1000,
 }).getMeter('aws-otel-js');
