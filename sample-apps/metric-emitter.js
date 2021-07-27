@@ -15,7 +15,7 @@ const API_LATENCY_METRIC = 'latency';
 /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */
 const meter = new MeterProvider({
     resource: Resource.default().merge(new Resource({
-      [ResourceAttributes.SERVICE_NAME]: "aws-otel-js-sample-http-app"
+      [ResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
     })),
     exporter: new CollectorMetricExporter(),
     interval: 1000,
@@ -24,11 +24,10 @@ const meter = new MeterProvider({
 /**  grabs instanceId and append to metric name to check individual metric for integration test */
 var latencyMetricName = API_LATENCY_METRIC;
 var apiBytesSentMetricName = API_COUNTER_METRIC;
-const instanceId = process.env.INSTANCE_ID || '';
-if (instanceId && instanceId.trim() !== '') {
-    latencyMetricName += '_' + instanceId;
-    apiBytesSentMetricName += '_' + instanceId;
-}
+const instanceId = process.env.INSTANCE_ID ? process.env.INSTANCE_ID.trimEnd() : "dummy-id";
+const instanceIdSuffix = '_' + instanceId;
+latencyMetricName += instanceIdSuffix;
+apiBytesSentMetricName += instanceIdSuffix;
 
 /** Counter Metrics */
 const payloadMetric = meter.createCounter(apiBytesSentMetricName, {

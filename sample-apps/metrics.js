@@ -11,7 +11,7 @@ const { Resource } = require('@opentelemetry/resources');
 /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */
 const meter = new MeterProvider({
   resource: Resource.default().merge(new Resource({
-    [ResourceAttributes.SERVICE_NAME]: "aws-otel-js-sample-http-app"
+    [ResourceAttributes.SERVICE_NAME]: "aws-otel-js-sample"
   })),
   // Expects Collector at default http://localhost:4317
   exporter: new CollectorMetricExporter(),

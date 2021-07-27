@@ -44,7 +44,7 @@ module.exports = () => {
 
   const tracerProvider = new NodeTracerProvider({
     resource: Resource.default().merge(new Resource({
-      [ResourceAttributes.SERVICE_NAME]: "aws-otel-js-sample-http-app"
+      [ResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
     })),
     idGenerator: new AWSXRayIdGenerator(),
   });
