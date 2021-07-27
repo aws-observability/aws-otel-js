@@ -3,15 +3,11 @@
 const { CollectorMetricExporter } = require('@opentelemetry/exporter-collector-grpc');
 const { MeterProvider } = require('@opentelemetry/metrics');
 
-/** The OTLP Metrics gRPC Collector */
-const metricExporter = new CollectorMetricExporter({
-  serviceName: 'aws-otel-js-sample',
-  url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : "localhost:55680"
-});
-
 /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */
 const meter = new MeterProvider({
-  exporter: metricExporter,
+  exporter: new CollectorMetricExporter({
+    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? "localhost:44317"
+  }),
   interval: 1000,
 }).getMeter('aws-otel-js');
 

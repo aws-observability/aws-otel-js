@@ -16,37 +16,44 @@
 
 'use strict'
 
+// OTel JS - API
+const { DiagConsoleLogger, DiagLogLevel, diag, trace } = require('@opentelemetry/api');
+
+// OTel JS - Core
 const { SimpleSpanProcessor, ConsoleSpanExporter } = require('@opentelemetry/tracing');
 const { NodeTracerProvider } = require('@opentelemetry/node');
+
+// OTel JS - Core - Exporters
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 
+// OTel JS - Core - Instrumentations
+const { Resource } = require('@opentelemetry/resources');
+const { ResourceAttributes } = require('@opentelemetry/semantic-conventions')
 const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
 const { AwsInstrumentation } = require('opentelemetry-instrumentation-aws-sdk');
 
+// OTel JS - Contrib - AWS X-Ray
 const { AWSXRayPropagator } = require('@opentelemetry/propagator-aws-xray');
 const { AWSXRayIdGenerator } = require('@opentelemetry/id-generator-aws-xray');
 
-const { DiagConsoleLogger, DiagLogLevel, diag, trace } = require('@opentelemetry/api');
 
-module.exports = (serviceName) => {
+module.exports = () => {
   diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
 
-  // create a provider for activating and tracking with AWS IdGenerator
-  const tracerConfig = {
+  const tracerProvider = new NodeTracerProvider({
+    resource: Resource.default().merge(new Resource({
+      [ResourceAttributes.SERVICE_NAME]: "AWS OTel JS Sample HTTP App"
+    })),
     idGenerator: new AWSXRayIdGenerator(),
-  };
-  const tracerProvider = new NodeTracerProvider(tracerConfig);
-
-  // add OTLP exporter
-  const otlpExporter = new CollectorTraceExporter({
-    serviceName: serviceName,
-    url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : "localhost:55680"
   });
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(otlpExporter));
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 
-  // Register the tracer with X-Ray propagator
+  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new CollectorTraceExporter({
+    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? "localhost:4317"
+  })
+  ));
+
   tracerProvider.register({
     propagator: new AWSXRayPropagator()
   });
@@ -60,6 +67,5 @@ module.exports = (serviceName) => {
     ]
   });
 
-  // Return a tracer instance
   return trace.getTracer("awsxray-tests");
 }
