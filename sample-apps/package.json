@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start:traces": "node server.js",
-    "start:metrics": "node metrics.js"
+    "start:metrics": "node send-metrics-app.js"
   },
   "keywords": [
     "opentelemetry",

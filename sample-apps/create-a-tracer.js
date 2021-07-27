@@ -39,32 +39,28 @@ const { ResourceAttributes } = require('@opentelemetry/semantic-conventions')
 const { AWSXRayIdGenerator } = require('@opentelemetry/id-generator-aws-xray');
 const { AWSXRayPropagator } = require('@opentelemetry/propagator-aws-xray');
 
+const tracerProvider = new NodeTracerProvider({
+  resource: Resource.default().merge(new Resource({
+    [ResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
+  })),
+  idGenerator: new AWSXRayIdGenerator(),
+});
 
-module.exports = () => {
+tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+// Expects Collector at default http://localhost:4317
+tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new CollectorTraceExporter()));
 
-  const tracerProvider = new NodeTracerProvider({
-    resource: Resource.default().merge(new Resource({
-      [ResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
-    })),
-    idGenerator: new AWSXRayIdGenerator(),
-  });
+tracerProvider.register({
+  propagator: new AWSXRayPropagator()
+});
 
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-  // Expects Collector at default http://localhost:4317
-  tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new CollectorTraceExporter()));
+registerInstrumentations({
+  instrumentations: [
+    new HttpInstrumentation(),
+    new AwsInstrumentation({
+      suppressInternalInstrumentation: true
+    }),
+  ]
+});
 
-  tracerProvider.register({
-    propagator: new AWSXRayPropagator()
-  });
-
-  registerInstrumentations({
-    instrumentations: [
-      new HttpInstrumentation(),
-      new AwsInstrumentation({
-        suppressInternalInstrumentation: true
-      }),
-    ]
-  });
-
-  return trace.getTracer("awsxray-tests");
-}
+module.exports = trace.getTracer("awsxray-tests");

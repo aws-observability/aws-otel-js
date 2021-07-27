@@ -16,19 +16,18 @@
 
 'use strict';
 
-const { emitsPayloadMetric, emitReturnTimeMetric } = require('./metric-emitter');
-const initialize_aws_xray_tracer = require('./tracer');
+const my_meter = require('./create-a-meter');
+const { emitsPayloadMetric, emitReturnTimeMetric } = require('./get-meter-emit-functions')(my_meter)
 
-// NOTE: TracerProvider must be initialized before instrumented packages (i.e.
-// 'aws-sdk' and 'http') are imported.
-initialize_aws_xray_tracer("hello");
+// NOTE: TracerProvider must be initialized before instrumented packages
+// (i.e. 'aws-sdk' and 'http') are imported.
+const my_tracer = require('./create-a-tracer');
 
 const http = require('http');
 const AWS = require('aws-sdk');
 
 const api = require('@opentelemetry/api');
 
-/** Starts an HTTP server that receives requests on sample server address. */
 function startServer(address) {
   const [hostname, port] = address.split(':');
   const server = http.createServer(handleRequest);
@@ -40,9 +39,7 @@ function startServer(address) {
   });
 }
 
-/** A function which handles requests and send response. */
 function handleRequest(req, res) {
-  // Start recording time for request
   const requestStartTime = new Date().getMilliseconds();
   try {
     if (req.url === '/') {
@@ -51,18 +48,16 @@ function handleRequest(req, res) {
 
     else if (req.url === '/aws-sdk-call') {
       const s3 = new AWS.S3();
-      const traceID = getTraceIdJson();
       s3.listBuckets(() => {
-        res.end(traceID);
+        res.end(getTraceIdJson());
       });
     }
 
     else if (req.url === '/outgoing-http-call') {
-      const traceID = getTraceIdJson();
       http.get('http://aws.amazon.com', () => {
+        res.end(getTraceIdJson());
         emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
         emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
-        res.end(traceID);
       });
     }
   } catch (err) {
@@ -70,7 +65,6 @@ function handleRequest(req, res) {
   }
 }
 
-//returns a traceId in X-Ray JSON format
 function getTraceIdJson() {
   const otelTraceId = api.trace.getSpan(api.context.active()).spanContext().traceId;
   const timestamp = otelTraceId.substring(0, 8);
@@ -79,7 +73,6 @@ function getTraceIdJson() {
   return JSON.stringify({ "traceId": xrayTraceId });
 }
 
-//returns random payload size
 function mimicPayLoadSize() {
   return Math.random() * 1000;
 }
