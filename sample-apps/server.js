@@ -16,12 +16,12 @@
 
 'use strict';
 
-const meter = require('./metric-emitter');
+const { emitsPayloadMetric, emitReturnTimeMetric } = require('./metric-emitter');
 const initialize_aws_xray_tracer = require('./tracer');
 
 // NOTE: TracerProvider must be initialized before instrumented packages (i.e.
 // 'aws-sdk' and 'http') are imported.
-initialize_aws_xray_tracer();
+initialize_aws_xray_tracer("hello");
 
 const http = require('http');
 const AWS = require('aws-sdk');
@@ -60,9 +60,9 @@ function handleRequest(req, res) {
     else if (req.url === '/outgoing-http-call') {
       const traceID = getTraceIdJson();
       http.get('http://aws.amazon.com', () => {
+        emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
+        emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
         res.end(traceID);
-        meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
-        meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
       });
     }
   } catch (err) {
