@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start:traces": "node server.js",
-    "start:metrics": "node metrics.js"
+    "start:metrics": "node send-metrics-app.js"
   },
   "keywords": [
     "opentelemetry",
@@ -17,17 +17,17 @@
     "node": ">=8"
   },
   "dependencies": {
-    "@opentelemetry/api": "^1.0.0-rc.0",
-    "@opentelemetry/core": "^0.19.0",
-    "@opentelemetry/exporter-collector-grpc": "^0.19.0",
-    "@opentelemetry/node": "^0.19.0",
-    "@opentelemetry/instrumentation": "^0.19.0",
-    "@opentelemetry/instrumentation-http": "^0.19.0",
-    "@opentelemetry/tracing": "^0.19.0",
-    "aws-sdk": "^2.799.0",
-    "@opentelemetry/id-generator-aws-xray": "^0.16.0",
-    "@opentelemetry/propagator-aws-xray": "^0.16.0",
-    "opentelemetry-instrumentation-aws-sdk": "^0.4.1"
+    "@opentelemetry/api": "1.0.1",
+    "@opentelemetry/core": "^0.23.0",
+    "@opentelemetry/exporter-collector-grpc": "^0.23.0",
+    "@opentelemetry/node": "^0.23.0",
+    "@opentelemetry/instrumentation": "^0.23.0",
+    "@opentelemetry/instrumentation-http": "^0.23.0",
+    "@opentelemetry/tracing": "^0.23.0",
+    "aws-sdk": "^2.875.0",
+    "@opentelemetry/id-generator-aws-xray": "^0.23.0",
+    "@opentelemetry/propagator-aws-xray": "^0.23.0",
+    "opentelemetry-instrumentation-aws-sdk": "^0.23.0"
   },
   "devDependencies": {
     "@lerna/link": "^3.21.0",

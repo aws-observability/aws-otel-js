@@ -15,19 +15,23 @@
  */
 
 'use strict';
-const tracer = require('./tracer')('aws-otel-integ-test');
+
+const my_meter = require('./create-a-meter');
+const { emitsPayloadMetric, emitReturnTimeMetric } = require('./get-meter-emit-functions')(my_meter)
+
+// NOTE: TracerProvider must be initialized before instrumented packages
+// (i.e. 'aws-sdk' and 'http') are imported.
+const my_tracer = require('./create-a-tracer');
+
 const http = require('http');
 const AWS = require('aws-sdk');
-const meter = require('./metric-emitter');
+
 const api = require('@opentelemetry/api');
 
-/** Starts a HTTP server that receives requests on sample server address. */
 function startServer(address) {
-  // Creates a server
+  const [hostname, port] = address.split(':');
   const server = http.createServer(handleRequest);
-  // Starts the server
-  const endpoint = address.split(':');
-  server.listen(endpoint[1], endpoint[0], (err) => {
+  server.listen(port, hostname, (err) => {
     if (err) {
       throw err;
     }
@@ -35,30 +39,25 @@ function startServer(address) {
   });
 }
 
-/** A function which handles requests and send response. */
 function handleRequest(req, res) {
-  const url = req.url;
   const requestStartTime = new Date().getMilliseconds();
-  // start recording a time for request
   try {
-    if (url === '/') {
+    if (req.url === '/') {
       res.end('healthcheck');
     }
 
-    if (url === '/aws-sdk-call') {
+    else if (req.url === '/aws-sdk-call') {
       const s3 = new AWS.S3();
-      const traceID = getTraceIdJson();
       s3.listBuckets(() => {
-        res.end(traceID);
+        res.end(getTraceIdJson());
       });
     }
 
-    if (url === '/outgoing-http-call') {
-      const traceID = getTraceIdJson();
+    else if (req.url === '/outgoing-http-call') {
       http.get('http://aws.amazon.com', () => {
-        res.end(traceID);
-        meter.emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
-        meter.emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
+        res.end(getTraceIdJson());
+        emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
+        emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
       });
     }
   } catch (err) {
@@ -66,15 +65,14 @@ function handleRequest(req, res) {
   }
 }
 
-//returns a traceId in X-Ray JSON format
 function getTraceIdJson() {
-  const traceId = api.getSpan(api.context.active()).context().traceId;
-  const xrayTraceId = "1-" + traceId.substring(0, 8) + "-" + traceId.substring(8);
-  const traceIdJson = JSON.stringify({"traceId": xrayTraceId});
-  return traceIdJson;
+  const otelTraceId = api.trace.getSpan(api.context.active()).spanContext().traceId;
+  const timestamp = otelTraceId.substring(0, 8);
+  const randomNumber = otelTraceId.substring(8);
+  const xrayTraceId = "1-" + timestamp + "-" + randomNumber;
+  return JSON.stringify({ "traceId": xrayTraceId });
 }
 
-//returns random payload size
 function mimicPayLoadSize() {
   return Math.random() * 1000;
 }

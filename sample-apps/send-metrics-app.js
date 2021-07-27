@@ -1,17 +1,20 @@
 'use strict';
 
+// OTel JS - API
+// const { DiagConsoleLogger, DiagLogLevel, diag } = require('@opentelemetry/api');
+// diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
+
 const { CollectorMetricExporter } = require('@opentelemetry/exporter-collector-grpc');
 const { MeterProvider } = require('@opentelemetry/metrics');
-
-/** The OTLP Metrics gRPC Collector */
-const metricExporter = new CollectorMetricExporter({
-  serviceName: 'aws-otel-js-sample',
-  url: (process.env.OTEL_EXPORTER_OTLP_ENDPOINT) ? process.env.OTEL_EXPORTER_OTLP_ENDPOINT : "localhost:55680"
-});
+const { Resource } = require('@opentelemetry/resources');
 
 /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */
 const meter = new MeterProvider({
-  exporter: metricExporter,
+  resource: Resource.default().merge(new Resource({
+    [ResourceAttributes.SERVICE_NAME]: "aws-otel-js-sample"
+  })),
+  // Expects Collector at env variable `OTEL_EXPORTER_OTLP_ENDPOINT`, otherwise, http://localhost:4317
+  exporter: new CollectorMetricExporter(),
   interval: 1000,
 }).getMeter('aws-otel-js');
 
