@@ -20,11 +20,9 @@ services:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
       - AWS_SESSION_TOKEN
-      - OTEL_EXPORTER_OTLP_ENDPOINT=otel:4317
-      - OTEL_EXPORTER_OTLP_INSECURE=true
+      - OTEL_EXPORTER_OTLP_ENDPOINT=grpc://otel:4317
       - AWS_REGION=us-west-2
     ports:
-      - '4567:4567'
       - '8080:8080'
 
   validator:
