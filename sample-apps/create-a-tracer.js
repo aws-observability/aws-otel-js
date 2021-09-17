@@ -22,18 +22,17 @@ const { trace } = require('@opentelemetry/api');
 // diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
 
 // OTel JS - Core
-const { NodeTracerProvider } = require('@opentelemetry/node');
-const { SimpleSpanProcessor, ConsoleSpanExporter } = require('@opentelemetry/tracing');
+const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
+const { SimpleSpanProcessor, ConsoleSpanExporter } = require('@opentelemetry/sdk-trace-base');
 
 // OTel JS - Core - Exporters
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
 
 // OTel JS - Core - Instrumentations
-const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
 const { AwsInstrumentation } = require('opentelemetry-instrumentation-aws-sdk');
 const { Resource } = require('@opentelemetry/resources');
-const { ResourceAttributes } = require('@opentelemetry/semantic-conventions')
+const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions')
 
 // OTel JS - Contrib - AWS X-Ray
 const { AWSXRayIdGenerator } = require('@opentelemetry/id-generator-aws-xray');
@@ -41,9 +40,15 @@ const { AWSXRayPropagator } = require('@opentelemetry/propagator-aws-xray');
 
 const tracerProvider = new NodeTracerProvider({
   resource: Resource.default().merge(new Resource({
-    [ResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
+    [SemanticResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
   })),
   idGenerator: new AWSXRayIdGenerator(),
+  instrumentations: [
+    new HttpInstrumentation(),
+    new AwsInstrumentation({
+      suppressInternalInstrumentation: true
+    }),
+  ]
 });
 
 tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
@@ -52,15 +57,6 @@ tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new CollectorTraceExport
 
 tracerProvider.register({
   propagator: new AWSXRayPropagator()
-});
-
-registerInstrumentations({
-  instrumentations: [
-    new HttpInstrumentation(),
-    new AwsInstrumentation({
-      suppressInternalInstrumentation: true
-    }),
-  ]
 });
 
 module.exports = trace.getTracer("awsxray-tests");

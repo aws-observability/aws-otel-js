@@ -1,6 +1,6 @@
-# ADOT JavaScript Sample App
+# AWS Distro for OpenTelemetry JavaScript Sample App
 
-A simple HTTP server that demonstrates OpenTelemetry instrumentation for JavaScript apps
+A simple HTTP server that demonstrates OpenTelemetry instrumentation for JavaScript apps.
 
 ## Prerequisites
 
@@ -15,7 +15,6 @@ Run the following commands to start the sample app:
 git clone https://github.com/aws-observability/aws-otel-js.git
 cd aws-otel-js/sample-apps
 npm install
-npm rebuild
 LISTEN_ADDRESS=localhost:8080 node server.js
 ```
 

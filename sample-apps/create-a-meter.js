@@ -5,14 +5,14 @@
 // diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
 
 const { CollectorMetricExporter } = require('@opentelemetry/exporter-collector-grpc');
-const { MeterProvider } = require('@opentelemetry/metrics');
+const { MeterProvider } = require('@opentelemetry/sdk-metrics-base');
 const { Resource } = require('@opentelemetry/resources');
-const { ResourceAttributes } = require('@opentelemetry/semantic-conventions')
+const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions')
 
 /** The OTLP Metrics Provider with OTLP gRPC Metric Exporter and Metrics collection Interval  */
 module.exports = new MeterProvider({
     resource: Resource.default().merge(new Resource({
-      [ResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
+      [SemanticResourceAttributes.SERVICE_NAME]: "aws-otel-integ-test"
     })),
     // Expects Collector at env variable `OTEL_EXPORTER_OTLP_ENDPOINT`, otherwise, http://localhost:4317
     exporter: new CollectorMetricExporter(),
