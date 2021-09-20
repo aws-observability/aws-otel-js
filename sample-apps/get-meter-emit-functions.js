@@ -22,14 +22,12 @@ module.exports = (meter) => {
     
     //** emitsPayLoadMetrics() Binds payload Metric with number of bytes */
     function emitsPayloadMetric(bytes, apiName, statusCode) {
-        console.log('emit metric with http request size ' + bytes + ' byte, ' + apiName);
         const labels = { 'apiName': apiName, 'statusCode': statusCode };
         payloadMetric.bind(labels).add(bytes);
     }
     
     //** binds request latency metric with returnTime */
     function emitReturnTimeMetric(returnTime, apiName, statusCode) {
-        console.log('emit metric with return time ' + returnTime + ', ' + apiName + ', ' + statusCode);
         const labels = { 'apiName': apiName, 'statusCode': statusCode };
         requestLatency.bind(labels).record(returnTime);
     }
