@@ -34,8 +34,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: .
-          file: sample-apps/Dockerfile
+          context: sample-apps
           tags: |
             public.ecr.aws/aws-otel-test/js-node:${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
