@@ -4,6 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN cd sample-apps && npm install
+RUN npm install
 
-CMD ["node", "sample-apps/server.js" ]
+CMD ["node", "server.js" ]
