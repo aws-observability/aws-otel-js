@@ -1,9 +1,5 @@
 'use strict';
 
-// OTel JS - API
-// const { DiagConsoleLogger, DiagLogLevel, diag } = require('@opentelemetry/api');
-// diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
-
 const { CollectorMetricExporter } = require('@opentelemetry/exporter-collector-grpc');
 const { MeterProvider } = require('@opentelemetry/sdk-metrics-base');
 const { Resource } = require('@opentelemetry/resources');

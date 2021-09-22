@@ -18,12 +18,10 @@
 
 // OTel JS - API
 const { trace } = require('@opentelemetry/api');
-// const { DiagConsoleLogger, DiagLogLevel, diag } = require('@opentelemetry/api');
-// diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
 
 // OTel JS - Core
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
-const { SimpleSpanProcessor, ConsoleSpanExporter } = require('@opentelemetry/sdk-trace-base');
+const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 
 // OTel JS - Core - Exporters
 const { CollectorTraceExporter } = require('@opentelemetry/exporter-collector-grpc');
@@ -51,7 +49,6 @@ const tracerProvider = new NodeTracerProvider({
   ]
 });
 
-tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
 // Expects Collector at env variable `OTEL_EXPORTER_OTLP_ENDPOINT`, otherwise, http://localhost:4317
 tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new CollectorTraceExporter()));
 
