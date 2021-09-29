@@ -105,10 +105,12 @@ jobs:
           LISTEN_ADDRESS_PORT: 8080
           LOG_GROUP_NAME: otel-sdk-performance-tests
           # Also uses:
+          # AWS_ACCESS_KEY_ID
+          # AWS_SECRET_ACCESS_KEY
+          # AWS_SESSION_TOKEN
           # APP_PATH
           # TARGET_SHA
           # LOGS_NAMESPACE
-          # LOG_STREAM_NAME
           # APP_PROCESS_COMMAND_LINE_DIMENSION_VALUE
           # APP_PROCESS_EXECUTABLE_NAME
           # HOSTMETRICS_INTERVAL_SECS
@@ -216,7 +218,7 @@ jobs:
         with:
           filename: .github/auto-issue-templates/failure-during-soak_tests.md
       - name: Publish Issue if failed AFTER Performance Tests
-        uses: NathanielRN/create-an-issue@v2.5.1-alpha2
+        uses: JasonEtco/create-an-issue@v2
         if: ${{ github.event_name == 'schedule' &&
           steps.check-failure-after-performance-tests.outcome == 'failure' }}
         env:
