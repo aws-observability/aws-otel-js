@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1632513979953,
+  "lastUpdate": 1632946073389,
   "repoUrl": "https://github.com/aws-observability/aws-otel-js",
   "entries": {
     "Soak Test Results - sample-app-http-manual": [
@@ -63,6 +63,38 @@ window.BENCHMARK_DATA = {
           {
             "name": "Soak Test Average Virtual Memory Used",
             "value": 1035.4220052083333,
+            "unit": "Megabytes"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN",
+            "email": "enowell@amazon.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "9c51391a1c29d677ffe50c54ef89f0ec4db38dc9",
+          "message": "Fix gh-pages link for auto Soak Test links (#68)",
+          "timestamp": "2021-09-29T03:28:58Z",
+          "url": "https://github.com/aws-observability/aws-otel-js/commit/9c51391a1c29d677ffe50c54ef89f0ec4db38dc9"
+        },
+        "date": 1632946072974,
+        "tool": "custombenchmark",
+        "benches": [
+          {
+            "name": "Soak Test Average CPU Load",
+            "value": 30.759523809523806,
+            "unit": "Percent"
+          },
+          {
+            "name": "Soak Test Average Virtual Memory Used",
+            "value": 1012.5290948275862,
             "unit": "Megabytes"
           }
         ]
