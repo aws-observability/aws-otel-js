@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1633982779660,
+  "lastUpdate": 1634328389173,
   "repoUrl": "https://github.com/aws-observability/aws-otel-js",
   "entries": {
     "Soak Test Results - sample-app-http-manual": [
@@ -127,6 +127,38 @@ window.BENCHMARK_DATA = {
           {
             "name": "Soak Test Average Virtual Memory Used",
             "value": 1003.4748697916667,
+            "unit": "Megabytes"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "(Eliseo) Nathaniel Ruiz Nowell",
+            "username": "NathanielRN",
+            "email": "enowell@amazon.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "e3789efa64eaa8f2148e7d2db39e66168eb27d19",
+          "message": "Detect docker-compose start up failures and fail soak tests early (#70)",
+          "timestamp": "2021-10-15T04:20:22Z",
+          "url": "https://github.com/aws-observability/aws-otel-js/commit/e3789efa64eaa8f2148e7d2db39e66168eb27d19"
+        },
+        "date": 1634328388756,
+        "tool": "custombenchmark",
+        "benches": [
+          {
+            "name": "Soak Test Average CPU Load",
+            "value": 32.21497023809524,
+            "unit": "Percent"
+          },
+          {
+            "name": "Soak Test Average Virtual Memory Used",
+            "value": 1034.6101831896551,
             "unit": "Megabytes"
           }
         ]
