@@ -228,6 +228,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           filename: .github/auto-issue-templates/failure-after-soak_tests.md
+          update_existing: true
       - name: Check for Performance Degradation either DURING or AFTER Performance Tests
         if: ${{ steps.check-failure-during-performance-tests.outcome == 'failure' ||
           steps.check-failure-after-performance-tests.outcome == 'failure' }}
