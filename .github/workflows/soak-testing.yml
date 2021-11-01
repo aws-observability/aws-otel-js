@@ -188,7 +188,7 @@ jobs:
           git checkout main;
           [[ $HAS_RESULTS_ALREADY == true ]]
       - name: Graph and Report Performance Test Averages result
-        uses: benchmark-action/github-action-benchmark@v1.10.0
+        uses: benchmark-action/github-action-benchmark@v1
         continue-on-error: true
         id: check-failure-after-performance-tests
         with:
