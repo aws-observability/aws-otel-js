@@ -67,7 +67,7 @@ function handleRequest(req, res) {
     }
 
     else if (req.url === '/outgoing-http-call') {
-      http.get('http://aws.amazon.com', () => {
+      http.get('https://aws.amazon.com', () => {
         if (shouldSampleAppLog) {
           console.log("Responding to /outgoing-http-call");
         }
