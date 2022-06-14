@@ -1,8 +1,10 @@
-# AWS Distro for OpenTelemetry JavaScript
+# AWS Distro for OpenTelemetry JavaScript Language
 
 ## Introduction
 
-The AWS Distro for OpenTelemetry (ADOT) JavaScript refers to some components developed to complement the upstream [OpenTelemetry JavaScript SDK](https://github.com/open-telemetry/opentelemetry-js) for use with AWS X-Ray. Check out the upstream project for documentation on the underlying features, APIs, and additional libraries. This repository only contains a small portion of components which will allow the OpenTelemetry JavaScript SDK to work with AWS X-Ray. The OpenTelemetry repository contains the rest. Note that ADOT is in preview for JavaScript metrics.
+This repo hosts documentation and sample apps for the ADOT JavaScript library which provides the AWS service integrations for traces and metrics for the [OpenTelemetry JavaScript](https://github.com/open-telemetry/opentelemetry-js) library. The library can be configured to support trace applications with the AWS X-Ray service.
+
+Check out the upstream project for documentation on the underlying features, APIs, and additional libraries. This repository only contains a small portion of components which will allow the OpenTelemetry JavaScript SDK to work with AWS X-Ray. The OpenTelemetry repository contains the rest. Note that ADOT is in preview for JavaScript metrics.
 
 We provided an ID generator and propagator, which can be configured from the OpenTelemetry upstream API. The telemetry data generated can be exported in a variety of formats and can be configured via command lines or environment variables. The aim of this project is to be able to gather telemetry data from a JavaScript application, propagate the AWS X-Ray trace header, and export trace data to the AWS X-Ray backend using the [AWS Distro for OpenTelemetry Collector](https://github.com/aws-observability/aws-otel-collector).
 
