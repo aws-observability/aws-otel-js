@@ -42,7 +42,7 @@
   "author": "OpenTelemetry Authors",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@commitlint/cli": "9.1.1",
+    "@commitlint/cli": "17.2.0",
     "@commitlint/config-conventional": "9.1.1",
     "@typescript-eslint/eslint-plugin": "3.7.1",
     "@typescript-eslint/parser": "3.7.1",
