@@ -26,7 +26,7 @@
     "aws-sdk": "^2.875.0",
     "@opentelemetry/id-generator-aws-xray": "^0.25.0",
     "@opentelemetry/propagator-aws-xray": "^0.25.0",
-    "opentelemetry-instrumentation-aws-sdk": "^0.24.2"
+    "opentelemetry-instrumentation-aws-sdk": "^0.26.0"
   },
   "devDependencies": {
     "@lerna/link": "^6.0.1",
