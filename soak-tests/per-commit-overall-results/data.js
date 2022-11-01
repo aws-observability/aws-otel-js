@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1655323658268,
+  "lastUpdate": 1667333317021,
   "repoUrl": "https://github.com/aws-observability/aws-otel-js",
   "entries": {
     "Soak Test Results - sample-app-http-manual": [
@@ -351,6 +351,38 @@ window.BENCHMARK_DATA = {
           {
             "name": "Soak Test Average Virtual Memory Used",
             "value": 1001.4329202586207,
+            "unit": "Megabytes"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]",
+            "email": "49699333+dependabot[bot]@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "fa843b657421346d8035f9b67e917668d95a25c7",
+          "message": "chore(deps-dev): bump gts from 2.0.2 to 3.1.1 (#103)\n\nBumps [gts](https://github.com/google/gts) from 2.0.2 to 3.1.1.\r\n- [Release notes](https://github.com/google/gts/releases)\r\n- [Changelog](https://github.com/google/gts/blob/main/CHANGELOG.md)\r\n- [Commits](https://github.com/google/gts/commits)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: gts\r\n  dependency-type: direct:development\r\n  update-type: version-update:semver-major\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2022-10-31T21:30:58Z",
+          "url": "https://github.com/aws-observability/aws-otel-js/commit/fa843b657421346d8035f9b67e917668d95a25c7"
+        },
+        "date": 1667333316316,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Soak Test Average CPU Load",
+            "value": 1.649109195402299,
+            "unit": "Percent"
+          },
+          {
+            "name": "Soak Test Average Virtual Memory Used",
+            "value": 482.6671605603448,
             "unit": "Megabytes"
           }
         ]
