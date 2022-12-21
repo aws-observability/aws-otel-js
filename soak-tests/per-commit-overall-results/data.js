@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1668715683989,
+  "lastUpdate": 1671653269391,
   "repoUrl": "https://github.com/aws-observability/aws-otel-js",
   "entries": {
     "Soak Test Results - sample-app-http-manual": [
@@ -415,6 +415,38 @@ window.BENCHMARK_DATA = {
           {
             "name": "Soak Test Average Virtual Memory Used",
             "value": 414.8842941810345,
+            "unit": "Megabytes"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "bryan-aguilar",
+            "username": "bryan-aguilar",
+            "email": "46550959+bryan-aguilar@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "c3f7efd2c64928280fc8fb57fd3ae5edb021d80c",
+          "message": "Update readme with security notification blurb (#122)",
+          "timestamp": "2022-12-20T20:22:04Z",
+          "url": "https://github.com/aws-observability/aws-otel-js/commit/c3f7efd2c64928280fc8fb57fd3ae5edb021d80c"
+        },
+        "date": 1671653268806,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Soak Test Average CPU Load",
+            "value": 1.285922619047619,
+            "unit": "Percent"
+          },
+          {
+            "name": "Soak Test Average Virtual Memory Used",
+            "value": 432.2719029017857,
             "unit": "Megabytes"
           }
         ]
