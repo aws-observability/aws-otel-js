@@ -1,4 +1,6 @@
-# AWS Distro for OpenTelemetry JavaScript Sample App
+# AWS Distro for OpenTelemetry JavaScript Sample App (DEPRECATED)
+
+**WARNING:** This sample app is deprecated and is no longer maintained.  Please use the [new standardized sample apps](https://github.com/aws-observability/aws-otel-community/tree/master/sample-apps).
 
 A simple HTTP server that demonstrates OpenTelemetry instrumentation for JavaScript apps.
 

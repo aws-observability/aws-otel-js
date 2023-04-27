@@ -12,6 +12,10 @@ We provided an ID generator and propagator, which can be configured from the Ope
 
 Check out the [getting started documentation](https://aws-otel.github.io/docs/getting-started/javascript-sdk).
 
+## Sample Application (DEPRECATED)
+
+**WARNING:** The sample app in this repository is deprecated and is no longer maintained.  Please use the [new standardized sample apps](https://github.com/aws-observability/aws-otel-community/tree/master/sample-apps).
+
 ## Supported Runtimes
 
 For the complete list of supported runtimes, please refer to the upstream documentation [here](https://github.com/open-telemetry/opentelemetry-js/blob/master/README.md#supported-runtimes)
