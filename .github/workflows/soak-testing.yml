@@ -68,7 +68,7 @@ jobs:
         run: |
           echo "$TEST_DURATION_MINUTES" | tee --append $GITHUB_ENV;
       - name: Clone This Repo @ ${{ env.TARGET_SHA }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           ref: ${{ env.TARGET_SHA }}
 
